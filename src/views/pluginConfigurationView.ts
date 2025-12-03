@@ -13,7 +13,7 @@ export const displayResourceColumnMissing = () => {
 }
 
 export const displayColumnsWithoutLabelMissing = (columnsMissingLabelDisplay: FormattedGristColumn[]) => {
-    pluginConfigurationDiv.innerHTML = `Les colonnes suivantes n'ont pas de colonne de labels associée (suffixe ${LABEL_COLUMN_SUFFIX}) : <strong>${columnsMissingLabelDisplay.map(col => col.label).join(", ")}</strong>.<br/>Veuillez créer les colonnes de labels associées.`
+    pluginConfigurationDiv.innerHTML = `Les colonnes suivantes n'ont pas de colonne de labels associée (suffixe ${LABEL_COLUMN_SUFFIX}) : <strong>${columnsMissingLabelDisplay.map(col => col.label).join(", ")}</strong>.<br/>Veuillez la cacher sur le panneau de création du plugin, ou bien créer les colonnes de labels associées.`
     pluginConfigurationDiv.style.display = "block";
 }
 

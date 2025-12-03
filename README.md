@@ -6,10 +6,10 @@ Le tutoriel suivant explique comment créer une table d'indexation avec des conc
 1. Se connecter sur grist -> "Nouveau" ->  "Ajouter table vide".
 2. Cliquer sur la première colonne, ouvrir le panneau de création. "Type de colonne : Référence", choisir votre table indexée
 3. "Nouveau" ->  "Ajouter une vue à la page" -> "Personnalisés" -> Sélectionner votre table d'indexation -> Ne pas oublier de sélectionner une option dans le menu déroulant "Select by".
-4. Menu "Choisir un widget personnalisé", sélectionner l'option "Ajouter votre propre widget URL personnalisée", et remplir avec l'URL https://sherlock-iremus.github.io/sherlock-data/grist_plugins/v2/dist/index.html
+4. Menu "Choisir un widget personnalisé", sélectionner l'option "Ajouter votre propre widget URL personnalisée", et remplir avec l'URL https://sherlock-iremus.github.io/sherlock-grist-opentheso-plugin/
 5. "Le widget a besoin de full access à ce document."  -> "Accepter"
 6. Créer une colonne `CONFIG_OPENTHESO`
-7. Renommer et donner le nom "uuid" à la colonne qui contient votre ressource indexée.
+7. Renommer et donner le nom "UUID" à la colonne qui contient votre ressource indexée.
 8. Pour chacun des types d'indexation, créer deux colonnes : `<type_indexation>` et `<type_indexation_prefLabel>`. Exemple `technique_utilisee` et `technique_utilisee_prefLabel`, qui recevront des concepts d'un thesaurus des techniques de gravure. 
 
 ⚠️ Chaque colonne ajoutée **après** installation du plugin se sera pas visible par défaut par le plugin. Pour ce faire, cliquez sur la vue du plugin, dans le panneau de création onglet "Personnalisée" -> "Colonnes cachées".
@@ -61,8 +61,6 @@ We followed next rules in this plugin development, for data integrity :
 
 `npm run dev`
 
-Do your modification
+Do your modification then push to github.
 
-`npm run build`, then push on your github.
-
-If your project is hosted on github and in the sub-folder `docs/`, the plugin should be accessible and integrable at the URL : `https://sherlock-iremus.github.io/sherlock-data/grist_plugins/v2/dist/index.html`
+The plugin should be accessible and integrable at the URL : `https://sherlock-iremus.github.io/sherlock-grist-opentheso-plugin/`
