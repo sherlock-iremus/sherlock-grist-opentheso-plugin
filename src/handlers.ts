@@ -9,7 +9,7 @@
 import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns, getConfigTableAsRecords } from "./controller/gristController";
 import { addConceptToColumn, removeConceptFromColumn, renderSelectedRecord } from "./controller/recordController";
 import { initializeAndFetchThesauri, renderSearchResults, renderSelectedThesaurus, renderThesauriList, searchConcepts } from "./controller/thesaurusController";
-import { gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri } from "./state";
+import { gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri, technicalTableId } from "./state";
 import { GristRecord } from "./types/GristRecord";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
 import { Thesaurus } from "./types/Thesaurus";
@@ -45,6 +45,8 @@ export const handlePluginInitialization = async () => {
     console.log("2");
 
     setConfigTable(await grist.docApi.fetchTable("CONFIG"))
+    console.log("2.2");
+    await grist.docApi.fetchTable(technicalTableId) // Fetch table aim the onRecord on the fetched table
     console.log("3");
 
     setColumns(await fetchTableColumns(gristTable))
@@ -57,7 +59,7 @@ export const handlePluginInitialization = async () => {
     console.log("6");
 
     
-    grist.onRecord((record: GristRecord | any) => {
+    grist.onRecord((record: GristRecord) => {
         console.log("8");
         handleNewRecord(record);
     });
