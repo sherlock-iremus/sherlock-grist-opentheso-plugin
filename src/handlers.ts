@@ -40,15 +40,29 @@ export const handlePluginInitialization = async () => {
     initializeAndFetchThesauri();
     
     grist.ready({ requiredAccess: "full" });
+    console.log("1");
     setGristTable(await grist.getTable());
+    console.log("2");
+
     setConfigTable(await grist.docApi.fetchTable("CONFIG"))
+    console.log("3");
+
     setColumns(await fetchTableColumns(gristTable))
+    console.log("4");
+
     setConfigTableRecords(getConfigTableAsRecords());
+    console.log("5");
+
     displayErrorsIfAnyConfigurationColumnMissing();
+    console.log("6");
+
     
     grist.onRecord((record: GristRecord) => {
+        console.log("8");
         handleNewRecord(record);
     });
+
+    console.log("9");
 }
 
 export const handleThesaurusClick = (thesaurus: Thesaurus) => {
