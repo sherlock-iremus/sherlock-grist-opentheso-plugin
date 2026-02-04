@@ -20,12 +20,8 @@ export const displayIndexationsByColumn = () => {
     ul.style.margin = "0";
 
     configTableRecords.forEach(indexationColumnToDisplay => {
-        console.log("afficher colonne label" + indexationColumnToDisplay.label);
-        console.log("afficher colonne id" + indexationColumnToDisplay.id);
-        
-        console.log("currentRecord : ", currentRecord);
-        console.log(currentRecord[indexationColumnToDisplay.id]);
-        currentRecord[indexationColumnToDisplay.id]?.split(';').forEach((uri_concept: string, index: number) => {
+        console.log("afficher colonne" + indexationColumnToDisplay.label);
+        currentRecord[indexationColumnToDisplay.uri]?.split(';').forEach((uri_concept: string, index: number) => {
             console.log("afficher concept " + uri_concept);
         });
     });
