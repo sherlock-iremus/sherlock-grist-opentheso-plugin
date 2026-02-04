@@ -8,7 +8,7 @@ const logConsoleWelcomeMessage = () => {
 ▐▄▄▟▘▐▌ ▐▌▐▙▄▄▖▐▌ ▐▌▐▙▄▄▖ █▄█  █▄▄▌▐▌ █▖
  ▀▀▘ ▝▘ ▝▘▝▀▀▀▘▝▘ ▝▀▝▀▀▀▘ ▝▀▘   ▀▀ ▝▘ ▝▘
                                         
-Grist X Opentheso Plugin - v2.0.0
+Grist X Opentheso Plugin - v3.0.0
 Please visit for technical documentation https://github.com/sherlock-iremus/ `);
 };
 
