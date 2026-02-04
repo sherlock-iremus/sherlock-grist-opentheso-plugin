@@ -44,12 +44,12 @@ export const handlePluginInitialization = async () => {
     setGristTable(await grist.getTable());
     console.log("2");
 
-    setConfigTable(await grist.docApi.fetchTable("CONFIG"))
+    setColumns(await fetchTableColumns(gristTable))
     console.log("2.2");
-    await grist.docApi.fetchTable(technicalTableId) // Fetch table aim the onRecord on the fetched table
+    setConfigTable(await grist.docApi.fetchTable("CONFIG"))
     console.log("3");
 
-    setColumns(await fetchTableColumns(gristTable))
+    await grist.docApi.fetchTable(technicalTableId) // Fetch table aim the onRecord on the fetched table
     console.log("4");
 
     setConfigTableRecords(getConfigTableAsRecords());
