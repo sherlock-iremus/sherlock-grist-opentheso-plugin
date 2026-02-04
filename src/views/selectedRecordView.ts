@@ -1,5 +1,4 @@
-import { handleDeleteIndexationButtonClick } from "../handlers";
-import { columns, configTable, configTableRecords, currentRecord } from "../state";
+import { configTableRecords, currentRecord } from "../state";
 import { existingIndexationsList, selectedResourceLabel } from "./pluginHTMLElements";
 
 export const displayNoResourceSelected = () => {
@@ -21,7 +20,8 @@ export const displayIndexationsByColumn = () => {
     ul.style.margin = "0";
 
     configTableRecords.forEach(indexationColumnToDisplay => {
-        console.log("afficher colonne " + indexationColumnToDisplay.label);
+        console.log("afficher colonne label" + indexationColumnToDisplay.label);
+        console.log("afficher colonne id" + indexationColumnToDisplay.id);
         
         console.log("currentRecord : ", currentRecord);
         console.log(currentRecord[indexationColumnToDisplay.id]);
