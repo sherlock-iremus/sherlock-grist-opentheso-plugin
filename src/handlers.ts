@@ -40,37 +40,17 @@ export const handlePluginInitialization = async () => {
     initializeAndFetchThesauri();
     
     grist.ready({ requiredAccess: "full" });
-    console.log("1");
     setGristTable(await grist.getTable());
-    console.log("2");
-
     setColumns(await fetchTableColumns(gristTable))
-    console.log("2.2");
-    try {
-        setConfigTable(await grist.docApi.fetchTable("CONFIG"))
-    }
-    catch (error) {
-        console.error("Error fetching CONFIG table:", error);
-    }
-    console.log("3");
-    console.log(technicalTableId);
-
-    await grist.docApi.fetchTable(technicalTableId) // Fetch table aim the onRecord on the fetched table
-    console.log("4");
-
+    setConfigTable(await grist.docApi.fetchTable("CONFIG"))
+    //await grist.docApi.fetchTable(technicalTableId) // Fetch table aim the onRecord on the fetched table
     setConfigTableRecords(getConfigTableAsRecords());
-    console.log("5");
-
     displayErrorsIfAnyConfigurationColumnMissing();
-    console.log("6");
-
     
     grist.onRecord((record: GristRecord) => {
-        console.log("8");
         handleNewRecord(record);
     });
 
-    console.log("9");
 }
 
 export const handleThesaurusClick = (thesaurus: Thesaurus) => {
