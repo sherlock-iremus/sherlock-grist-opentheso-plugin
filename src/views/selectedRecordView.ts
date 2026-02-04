@@ -23,7 +23,7 @@ export const displayIndexationsByColumn = () => {
     configTableRecords.forEach(indexationColumnToDisplay => {
         console.log("afficher colonne " + indexationColumnToDisplay.label);
         
-        console.log(currentRecord);
+        console.log("currentRecord : ", currentRecord);
         console.log(currentRecord[indexationColumnToDisplay.id]);
         currentRecord[indexationColumnToDisplay.id]?.split(';').forEach((uri_concept: string, index: number) => {
             console.log("afficher concept " + uri_concept);
