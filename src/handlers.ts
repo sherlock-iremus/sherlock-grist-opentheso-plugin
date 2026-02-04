@@ -57,7 +57,7 @@ export const handlePluginInitialization = async () => {
     console.log("6");
 
     
-    grist.onRecord((record: GristRecord) => {
+    grist.onRecord((record: GristRecord | any) => {
         console.log("8");
         handleNewRecord(record);
     });
