@@ -46,8 +46,14 @@ export const handlePluginInitialization = async () => {
 
     setColumns(await fetchTableColumns(gristTable))
     console.log("2.2");
-    setConfigTable(await grist.docApi.fetchTable("CONFIG"))
+    try {
+        setConfigTable(await grist.docApi.fetchTable("CONFIG"))
+    }
+    catch (error) {
+        console.error("Error fetching CONFIG table:", error);
+    }
     console.log("3");
+    console.log(technicalTableId);
 
     await grist.docApi.fetchTable(technicalTableId) // Fetch table aim the onRecord on the fetched table
     console.log("4");
