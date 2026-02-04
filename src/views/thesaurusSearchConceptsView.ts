@@ -1,8 +1,7 @@
 import { handleSelectOptionChange } from "../handlers";
-import { columns, conceptList, currentThesaurus, indexations } from "../state";
+import { columns, conceptList, currentThesaurus } from "../state";
 import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
-import { LABEL_COLUMN_SUFFIX } from "../utils/consts";
 import { searchResults } from "./pluginHTMLElements";
 
 export const displayLoading = () => {
@@ -79,7 +78,7 @@ const getConceptIdForConcept = (concept: OpenthesoConcept) => {
     return "https://opentheso.huma-num.fr" + concept["@id"].split('/').pop();
 }
 
-const getIndexableLabelColumnsForConcept = (conceptId: string): FormattedGristColumn[] => {
+/*const getIndexableLabelColumnsForConcept = (conceptId: string): FormattedGristColumn[] => {
     return columns
         .filter(c => c.id.endsWith(LABEL_COLUMN_SUFFIX))
         .filter(c => !indexations[c.id.replace(LABEL_COLUMN_SUFFIX, '')]?.some(item => item.uri_concept === conceptId));
@@ -89,7 +88,7 @@ const getAlreadyIndexedLabelColumns = (conceptId: string): FormattedGristColumn[
     return columns
         .filter(c => c.id.endsWith(LABEL_COLUMN_SUFFIX))
         .filter(c => indexations[c.id.replace(LABEL_COLUMN_SUFFIX, '')]?.some(item => item.uri_concept === conceptId));
-}
+}*/
 
 const getOptionForColumn = (col: FormattedGristColumn) => {
     const opt = document.createElement("option");
@@ -98,7 +97,7 @@ const getOptionForColumn = (col: FormattedGristColumn) => {
     return opt;
 }
 
-const getActionCellForConcept = (conceptId: string, label: string) => {
+/*const getActionCellForConcept = (conceptId: string, label: string) => {
     const labelColumnsIndexable = getIndexableLabelColumnsForConcept(conceptId);
     const alreadyIndexedLabelColumns = getAlreadyIndexedLabelColumns(conceptId);
 
@@ -132,5 +131,5 @@ const getConceptLabelCell = (conceptId: string, label: string) => {
     labelCell.className = "concepts-label-cell";
     labelCell.innerHTML = `${label} <a href="${conceptId}" target="_blank" rel="noopener"><img src="./up-right-from-square.svg"/></a>`;
     return labelCell;
-}
+}*/
 

@@ -6,10 +6,10 @@
  * The handler is the only part of the code that has access to the controllers
  */
 
-import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns } from "./controller/gristController";
+import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns, getConfigTableAsRecords } from "./controller/gristController";
 import { addConceptToColumn, removeConceptFromColumn, renderSelectedRecord } from "./controller/recordController";
 import { initializeAndFetchThesauri, renderSearchResults, renderSelectedThesaurus, renderThesauriList, searchConcepts } from "./controller/thesaurusController";
-import { gristTable, setColumns, setConceptList, setCurrentRecord, setcurrentThesaurus, setGristTable, setIndexations, setThesauri } from "./state";
+import { gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri } from "./state";
 import { GristRecord } from "./types/GristRecord";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
 import { Thesaurus } from "./types/Thesaurus";
@@ -17,23 +17,23 @@ import { Thesaurus } from "./types/Thesaurus";
 export const handleNewRecord = (record: GristRecord) => {
     console.log("New record selected:", record);
     setCurrentRecord(record);
-    setIndexations(record && record.CONFIG_OPENTHESO ? JSON.parse(record.CONFIG_OPENTHESO) : {});
     renderSelectedRecord();
 }
 
-export const handleDeleteIndexationButtonClick = (uri_concept: string, colId: string) => {
-    console.log("Removing concept from column:", uri_concept, colId);
-    removeConceptFromColumn(uri_concept, colId);
+/**
+ * 
+ * @param index position of concept in list of concepts column. 
+ * @param uriColId id of the URI column storing this concept
+ * @param labelColId id of the label column storing this concept
+ */
+export const handleDeleteIndexationButtonClick = (concept: string, index: number, uriColId: string, labelColId: string) => {
+    console.log("Removing concept: ", concept);
+    removeConceptFromColumn(index, uriColId, labelColId);
 }
 
-export const handleSelectOptionChange = (conceptId: string, label: string, selectedCol: string) => {
-    if (!selectedCol) {
-        alert("Veuillez sélectionner une colonne.");
-        return;
-    }
-
-    console.log("Add concept to column", selectedCol, conceptId, label);
-    addConceptToColumn(conceptId, label, selectedCol);
+export const handleSelectOptionChange = (conceptId: string, label: string, uriColId: string, labelColId: string) => {
+    console.log("Add concept to column", uriColId, conceptId, label);
+    addConceptToColumn(conceptId, label, uriColId, labelColId);
 }
 
 export const handlePluginInitialization = async () => {
@@ -41,7 +41,9 @@ export const handlePluginInitialization = async () => {
     
     grist.ready({ requiredAccess: "full" });
     setGristTable(await grist.getTable());
+    setConfigTable(await grist.docApi.fetchTable("CONFIG"))
     setColumns(await fetchTableColumns(gristTable))
+    setConfigTableRecords(getConfigTableAsRecords());
     displayErrorsIfAnyConfigurationColumnMissing();
     
     grist.onRecord((record: GristRecord) => {

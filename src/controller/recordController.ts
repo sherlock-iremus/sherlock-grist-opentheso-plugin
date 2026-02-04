@@ -1,9 +1,6 @@
 import { upsertGristRecordApiCall } from "../api/grist";
-import { indexations, currentRecord } from "../state";
-import { ConfigurationColumnData } from "../types/ConfigurationColumnData";
-import { UpsertFields } from "../types/GristTable";
-import { LABEL_COLUMN_SUFFIX } from "../utils/consts";
-import { displayExistingIndexations, displayNoExistingIndexations, displayNoResourceSelected, displaySelectedResourceLabel } from "../views/selectedRecordView";
+import { currentRecord } from "../state";
+import { displayIndexationsByColumn, displayNoResourceSelected, displaySelectedResourceLabel } from "../views/selectedRecordView";
 import { displaySearchResults } from "../views/thesaurusSearchConceptsView";
 
 export const renderSelectedRecord = () => {
@@ -13,50 +10,30 @@ export const renderSelectedRecord = () => {
     }
 
     displaySelectedResourceLabel();
-    
-    if (!Object.keys(indexations).length) {
-        displayNoExistingIndexations();
-        return;
-    }
-
-    displayExistingIndexations();
+    displayIndexationsByColumn();
     displaySearchResults();
 }
 
 
-export const removeConceptFromColumn = (conceptId: string, targetLabelColumn: string) => {
-    const targetUriColumn = targetLabelColumn.replace(LABEL_COLUMN_SUFFIX, '')
+export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: string, labelColumnId: string) => {
 
-    indexations[targetUriColumn] = indexations[targetUriColumn].filter(item => item.uri_concept !== conceptId);
+    const urisArray = currentRecord[uriColumnId].split(';');
+    urisArray.splice(conceptIndex, 1);
+    const newUrisString = urisArray.join(';');
+    
+    const labelsArray = currentRecord[labelColumnId].split(';');
+    labelsArray.splice(conceptIndex, 1);
+    const newLabelsString = labelsArray.join(';');
 
-    upsertGristRecord(indexations);
+    upsertGristRecordApiCall({
+        [uriColumnId]: newUrisString,
+        [labelColumnId]: newLabelsString
+    }, { id: currentRecord.id })
 }
 
-export const addConceptToColumn = (conceptId: string, label: string, targetLabelColumn: string) => {
-    
-    const targetUriColumn = targetLabelColumn.replace(LABEL_COLUMN_SUFFIX, '')
-    
-    if (!Array.isArray(indexations[targetUriColumn])) {
-        indexations[targetUriColumn] = [];
-    }
-    
-    if (! indexations[targetUriColumn].some(item => item.uri_concept === conceptId)) {
-        indexations[targetUriColumn].push({
-            uri_concept: conceptId,
-            label_concept: label,
-        })
-    }
-    
-    upsertGristRecord(indexations);
+export const addConceptToColumn = (conceptId: string, label: string, uriColumnId: string, labelColumnId: string) => {
+    upsertGristRecordApiCall({
+        [uriColumnId]: currentRecord[uriColumnId] + ';' + conceptId,
+        [labelColumnId]: currentRecord[labelColumnId] + ';' + label
+    }, { id: currentRecord.id })
 }
-
-const upsertGristRecord = (indexations: ConfigurationColumnData) => {
-    const labelFields: UpsertFields = {};
-    for (const [col, indexationsByConcept] of Object.entries(indexations)) {
-        labelFields[col] = (indexationsByConcept || []).map(idx => idx.uri_concept).join(' ; ');
-        labelFields[col + LABEL_COLUMN_SUFFIX] = (indexationsByConcept || []).map(idx => idx.label_concept).join(' ; ');
-    }
-
-    upsertGristRecordApiCall({CONFIG_OPENTHESO: JSON.stringify(indexations), ...labelFields }, { id: currentRecord.id })
-}
-

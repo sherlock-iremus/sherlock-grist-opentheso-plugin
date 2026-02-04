@@ -1,20 +1,30 @@
-import { ConfigurationColumnData } from "./types/ConfigurationColumnData";
+import { ConfigurationTableData } from "./types/ConfigurationTableData";
 import { FormattedGristColumn } from "./types/FormattedGristColumn";
 import { GristRecord } from "./types/GristRecord";
 import { GristTable } from "./types/GristTable";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
 import { Thesaurus } from "./types/Thesaurus";
 
-export let indexations: ConfigurationColumnData;
 export let gristTable: GristTable;
 export let thesauri: Thesaurus[];
 export let currentThesaurus: Thesaurus;
 export let conceptList: OpenthesoConcept[];
 export let columns: FormattedGristColumn[];
 export let currentRecord: GristRecord;
+export let configTable: ConfigurationTableData;
+export let technicalTableId: string;
+export let configTableRecords: FormattedConfigurationTableRecord[];
 
-export const setIndexations = (newIndexations: ConfigurationColumnData) => {
-    indexations = newIndexations;
+export const setConfigTableRecords = (newConfigTableRecords: FormattedConfigurationTableRecord[]) => {
+    configTableRecords = newConfigTableRecords;
+}
+
+export const setConfigTable = (newConfigTable: ConfigurationTableData) => {
+    configTable = newConfigTable;
+}
+
+export const setTechnicalTableId = (tableId: string) => {
+    technicalTableId = tableId;
 }
 
 export const setGristTable = (table: GristTable) => {

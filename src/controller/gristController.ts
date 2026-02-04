@@ -1,9 +1,10 @@
-import { columns } from "../state";
+import { columns, configTable, configTableRecords, setTechnicalTableId, technicalTableId } from "../state";
 import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { GristTablesColumns } from "../types/grist";
 import { GristTable } from "../types/GristTable";
-import { CONFIGURATION_COLUMN_NAME, LABEL_COLUMN_SUFFIX, RESOURCE_COLUMN_NAME } from "../utils/consts";
-import { displayColumnsWithoutLabelMissing, displayConfigurationColumnMissing, displayConfigurationOK, displayResourceColumnMissing } from "../views/pluginConfigurationView";
+import { RESOURCE_COLUMN_NAME } from "../utils/consts";
+import { indexesOf } from "../utils/indexesOf";
+import { displayColumnsMissing, displayConfigurationOK, displayResourceColumnMissing } from "../views/pluginConfigurationView";
 
 /**
  * Plugin initialization, get all columns of the current table.
@@ -35,7 +36,7 @@ export const fetchTableColumns = async (gristTable: GristTable): Promise<Formatt
 }
 
 const fetchCurrentTableColumnsFromDocApi = async (gristTable: GristTable, gristTableColumns: GristTablesColumns) => {
-    const technicalTableId = await gristTable.getTableId();
+    setTechnicalTableId(await gristTable.getTableId());
     console.log("technicalTableId : ", technicalTableId)
 
     const gristTables = await grist.docApi.fetchTable("_grist_Tables")
@@ -55,23 +56,35 @@ const fetchCurrentTableColumnsFromDocApi = async (gristTable: GristTable, gristT
 }
 
 export const displayErrorsIfAnyConfigurationColumnMissing = () => {
-    const columnsMissingLabelDisplay = columns.filter(
-        column => !column.id.endsWith(LABEL_COLUMN_SUFFIX) &&
-            column.id !==CONFIGURATION_COLUMN_NAME &&
-            column.id !== RESOURCE_COLUMN_NAME &&
-            columns.filter(col => col.id === (column.id + LABEL_COLUMN_SUFFIX)).length === 0
-    );
+    const uriColumnMissingList = configTableRecords.filter(record => {
+         return columns.some(col => col.id === record.uri);
+    });
 
-    if (!columns.map(col => col.id).includes(CONFIGURATION_COLUMN_NAME)) {
-        console.warn("Configuration column is missing, this will cause issues.");
-        displayConfigurationColumnMissing();
-    } else if (!columns.map(col => col.id).includes(RESOURCE_COLUMN_NAME)) {
+    const labelColumnMissingList = configTableRecords.filter(record => {
+        return columns.some(col => col.label === record.label);
+    });
+
+    if (!columns.map(col => col.id).includes(RESOURCE_COLUMN_NAME)) {
         console.warn("Resource URI column is missing, this will cause issues.");
         displayResourceColumnMissing();
-    } else if (columnsMissingLabelDisplay.length) {
-        console.warn("Some columns are missing their label display column, this will cause issues.", columnsMissingLabelDisplay);
-        displayColumnsWithoutLabelMissing(columnsMissingLabelDisplay);
+    } else if (uriColumnMissingList.length || labelColumnMissingList.length) {
+        console.warn("Some URI | label columns are missing : ", uriColumnMissingList, labelColumnMissingList);
+        displayColumnsMissing(uriColumnMissingList, labelColumnMissingList);
     } else {
         displayConfigurationOK();
     }
+}
+
+export const getConfigTableAsRecords = (): FormattedConfigurationTableRecord[] => {
+    const indexes: number[] = indexesOf(technicalTableId, configTable.table);
+    return indexes.map(index => {
+        return {
+            id: configTable.id[index],
+            manualSort: configTable.manualSort[index],
+            table: configTable.table[index],
+            uri: configTable.uri[index],
+            thesaurus: configTable.thesaurus[index],
+            label: configTable.label[index]
+        }
+    });
 }

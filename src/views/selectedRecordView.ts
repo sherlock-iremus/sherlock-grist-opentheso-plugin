@@ -1,7 +1,5 @@
 import { handleDeleteIndexationButtonClick } from "../handlers";
-import { columns, currentRecord, indexations } from "../state";
-import { ConceptItem } from "../types/ConfigurationColumnData";
-import { LABEL_COLUMN_SUFFIX } from "../utils/consts";
+import { columns, configTable, configTableRecords, currentRecord } from "../state";
 import { existingIndexationsList, selectedResourceLabel } from "./pluginHTMLElements";
 
 export const displayNoResourceSelected = () => {
@@ -17,7 +15,20 @@ export const displayNoExistingIndexations = () => {
     existingIndexationsList.innerHTML = "<div style='font-size:0.95em;'>Aucune indexation existante.</div>";
 }
 
-export const displayExistingIndexations = () => {
+export const displayIndexationsByColumn = () => {
+    const ul = document.createElement("ul");
+    ul.style.paddingLeft = "1.2em";
+    ul.style.margin = "0";
+
+    configTableRecords.forEach(indexationColumnToDisplay => {
+        console.log("afficher colonne " + indexationColumnToDisplay.label);
+        
+        currentRecord[indexationColumnToDisplay.id].split(';').forEach((uri_concept: string, index: number) => {
+            console.log("afficher concept " + uri_concept);
+        });
+    });
+}
+/*export const displayIndexationsByColumn = () => {
     existingIndexationsList.innerHTML = "<h3 style='font-size:1em;margin-bottom:6px;'>Liste des indexations existantes</h3>";
 
     const ul = document.createElement("ul");
@@ -32,9 +43,9 @@ export const displayExistingIndexations = () => {
 
     existingIndexationsList.appendChild(ul);
 
-}
+}*/
 
-const getConceptsAsListItemsByColumn = (
+/*const getConceptsAsListItemsByColumn = (
     colId: string,
     indexationsByConcept: ConceptItem[]) => {
     const colObj = columns.find(c => c.id === colId + LABEL_COLUMN_SUFFIX);
@@ -103,3 +114,4 @@ function getConceptAsSpan(colId: string, indexation: ConceptItem) {
     return conceptSpan;
 };
 
+*/

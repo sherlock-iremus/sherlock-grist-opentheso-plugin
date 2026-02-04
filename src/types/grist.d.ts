@@ -19,7 +19,9 @@ declare global {
           ? GristTables
           : T extends "_grist_Tables_column"
             ? GristTablesColumns
-            : any[]
+            : T extends "CONFIG"
+              ? ConfigurationTableData
+              : any[]
       >;
     };
 
