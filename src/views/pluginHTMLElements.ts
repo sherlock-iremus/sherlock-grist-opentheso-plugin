@@ -9,6 +9,5 @@ export const pluginConfigurationDiv = getElementByIdOrThrow<HTMLDivElement>("con
 export const existingIndexationsList = getElementByIdOrThrow<HTMLDivElement>("existingIndexationsList");
 export const selectedThesaurusLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedThesaurusLabel");
 export const thesaurusLink = getElementByIdOrThrow<HTMLAnchorElement>("thesaurusLink");
-export const searchInput = getElementByIdOrThrow<HTMLInputElement>("searchInput");
 export const searchBtn = getElementByIdOrThrow<HTMLButtonElement>("searchBtn");
 export const searchResults = getElementByIdOrThrow<HTMLPreElement>("searchResults");
