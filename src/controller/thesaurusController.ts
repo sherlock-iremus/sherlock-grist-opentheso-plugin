@@ -3,7 +3,7 @@ import { handleSearchConceptsFetched, handleThesauriFetched } from "../handlers"
 import { currentRecord, currentThesaurus, thesauri } from "../state";
 import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
 import { displayError, displayLoading, displaySearchResults } from "../views/thesaurusSearchConceptsView";
-import { closeSidebar, displaySelectedThesaurus, displayThesauri, initializeThesauriView, showThesauriLoadingError } from "../views/thesaurusSelectionView";
+import { closeSidebar, displayThesauri, initializeThesauriView, showThesauriLoadingError } from "../views/thesaurusSelectionView";
 
 export const initializeAndFetchThesauri = async () => {
     try {
@@ -20,7 +20,6 @@ export const renderThesauriList = () => {
 }
 
 export const renderSelectedThesaurus = () => {
-    displaySelectedThesaurus();
     closeSidebar();
 }
 
