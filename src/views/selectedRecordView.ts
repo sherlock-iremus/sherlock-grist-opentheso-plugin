@@ -37,7 +37,7 @@ export const displayIndexationsByColumn = () => {
         
         const colSpan = document.createElement("span");
         colSpan.className = "indexation-type-label";
-        colSpan.textContent = indexationColumnToDisplay.label + ("Thésaurus : " + (thesaurusName || "Non spécifié"));
+        colSpan.textContent = indexationColumnToDisplay.label + ((thesaurusName || "Thésaurus non trouvé"));
         headerDiv.appendChild(colSpan);
         
         const link = document.createElement("a");
@@ -95,5 +95,5 @@ export const displayIndexationsByColumn = () => {
         li.appendChild(conceptsDiv);
         ul.appendChild(li);
     });
-    existingIndexationsList.appendChild(ul);
+    existingIndexationsList.replaceChildren(ul);
 }

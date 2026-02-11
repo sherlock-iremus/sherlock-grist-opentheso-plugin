@@ -58,13 +58,14 @@ const fetchCurrentTableColumnsFromDocApi = async (gristTable: GristTable, gristT
 export const displayErrorsIfAnyConfigurationColumnMissing = () => {
     console.log("Checking for missing configuration columns...");
     console.log("configTableRecords : ", configTableRecords);
-    
+    console.log("currentTableFormattedColumns : ", columns);
+
     const uriColumnMissingList = configTableRecords.filter(record => {
          return !columns.some(col => col.id === record.uri);
     });
 
     const labelColumnMissingList = configTableRecords.filter(record => {
-        return !columns.some(col => col.label === record.label);
+        return !columns.some(col => col.id === record.label);
     });
 
     if (!columns.map(col => col.id).includes(RESOURCE_COLUMN_NAME)) {
