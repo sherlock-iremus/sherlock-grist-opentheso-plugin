@@ -9,7 +9,6 @@ export const pluginConfigurationDiv = getElementByIdOrThrow<HTMLDivElement>("con
 export const existingIndexationsList = getElementByIdOrThrow<HTMLDivElement>("existingIndexationsList");
 export const sidebar = getElementByIdOrThrow<HTMLDivElement>("sidebar");
 export const openSidebarBtn = getElementByIdOrThrow<HTMLButtonElement>("openSidebarBtn");
-export const thesaurusList = getElementByIdOrThrow<HTMLDivElement>("thesaurusList");
 export const selectedThesaurusLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedThesaurusLabel");
 export const thesaurusLink = getElementByIdOrThrow<HTMLAnchorElement>("thesaurusLink");
 export const searchInput = getElementByIdOrThrow<HTMLInputElement>("searchInput");
