@@ -10,31 +10,23 @@
 <body>
     <main>
         <div id="sidebar">
-            <input id="filterInput" type="text" placeholder="Filtrer les thésaurus..." />
-            <div id="thesaurusList">Chargement des thésaurus...</div>
+            <div>
+                <span style="font-weight:bold;">Thesaurus sélectionné :</span>
+                <span id="selectedThesaurusLabel"></span>
+                <a id="thesaurusLink" href="#" target="_blank"
+                    style="margin-left:6px;vertical-align:middle;display:none;">
+                    <img src="./up-right-from-square.svg" />
+                </a>
+            </div>
+            <input id="searchInput" type="text" placeholder="Rechercher un concept..." />
+            <button id="searchBtn">Rechercher</button>
+            <pre id="searchResults"></pre>
         </div>
 
         <div id="content">
-            <div style="display: flex; flex-direction: row; gap: 24px;">
-                <!-- Colonne gauche : Sélection thésaurus et résultats de recherche -->
-                <div style="width: 55%; min-width: 320px;">
-                    <div>
-                        <span style="font-weight:bold;">Thesaurus sélectionné :</span>
-                        <span id="selectedThesaurusLabel"></span>
-                        <a id="thesaurusLink" href="#" target="_blank"
-                            style="margin-left:6px;vertical-align:middle;display:none;">
-                            <img src="./up-right-from-square.svg" />
-                        </a>
-                    </div>
-                    <button id="selectOtherThesaurusBtn" style="margin-bottom:1em;">Sélectionner un autre
-                        thésaurus</button>
-                    <input id="searchInput" type="text" placeholder="Rechercher un concept..." />
-                    <button id="searchBtn">Rechercher</button>
-                    <pre id="searchResults"></pre>
-                </div>
-
-                <!-- Colonne droite : indexations existantes -->
-                <div id="existingIndexationsCol" style="width: 45%; min-width: 240px;">
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <!-- Ressource et indexations existantes -->
+                <div id="existingIndexationsCol">
                     <span style="font-weight:bold;">Ressource :</span>
                     <span id="selectedResourceLabel"></span>
 
@@ -43,7 +35,6 @@
                     <!-- La liste des indexations existantes sera injectée ici -->
                     <div id="existingIndexationsList"></div>
                 </div>
-
             </div>
         </div>
     </main>

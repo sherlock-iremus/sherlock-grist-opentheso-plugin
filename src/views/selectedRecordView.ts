@@ -20,15 +20,14 @@ export const displayIndexationsByColumn = () => {
     ul.style.paddingLeft = "1.2em";
     ul.style.margin = "0";
 
-    let hasIndexations = false;
-
     configTableRecords.forEach(indexationColumnToDisplay => {
         const uriArray = currentRecord[indexationColumnToDisplay.uri]?.split(';').filter((uri: string) => uri.trim()) || [];
         const labelArray = currentRecord[indexationColumnToDisplay.label]?.split(';').filter((label: string) => label.trim()) || [];
-        const columnConfiguration = configTableRecords.find(record => {
-            return record.uri === indexationColumnToDisplay.uri;
-        })
-        
+
+        const thesaurusId = (new URL(indexationColumnToDisplay.thesaurus)).searchParams.get("idt");
+
+        const thesaurus = thesauri.find(t => t.idTheso === thesaurusId);
+        const thesaurusName = thesaurus?.labels.find(l => l.lang === "fr")?.title;
         const li = document.createElement("li");
         li.className = "indexation-type-item";
         
@@ -38,11 +37,11 @@ export const displayIndexationsByColumn = () => {
         
         const colSpan = document.createElement("span");
         colSpan.className = "indexation-type-label";
-        colSpan.textContent = indexationColumnToDisplay.label + ("Thésaurus : " + (columnConfiguration?.thesaurus || "Non spécifié"));
+        colSpan.textContent = indexationColumnToDisplay.label + ("Thésaurus : " + (thesaurusName || "Non spécifié"));
         headerDiv.appendChild(colSpan);
         
         const link = document.createElement("a");
-        link.href = columnConfiguration?.thesaurus || "#";
+        link.href = indexationColumnToDisplay.thesaurus;
         link.target = "_blank";
         link.rel = "noopener";
         link.className = "thesaurus-link";

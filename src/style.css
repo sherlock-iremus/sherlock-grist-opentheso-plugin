@@ -27,6 +27,9 @@ main {
     transition: transform 0.3s;
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #sidebar.closed {
@@ -37,24 +40,22 @@ main {
     height: 100%;
 }
 
-#filterInput {
+#searchInput {
     width: 100%;
-    margin-bottom: 10px;
     padding: 5px;
     box-sizing: border-box;
 }
 
-.thesaurus-item {
-    padding: 6px;
-    margin: 4px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    opacity: 0.8
+#searchBtn {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
-.thesaurus-item:hover {
-    opacity: 1;
+#searchResults {
+    flex: 1;
+    overflow: auto;
+    font-size: 0.9em;
 }
 
 #content {
@@ -67,14 +68,13 @@ main {
 
 #content > div {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 24px;
+    width: 100%;
 }
 
-#content > div > div:last-child {
-    margin-left: 30px;
-    width: 45%;
-    min-width: 320px;
+#existingIndexationsCol {
+    width: 100%;
 }
 
 .indexation-type-item {
@@ -85,7 +85,8 @@ main {
 
 .indexation-type-line {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   font-size: 0.95em;
   margin-top: 2px;
 }
@@ -143,7 +144,6 @@ main {
 
 .concepts-action-cell {
   vertical-align: top;
-  
 }
 
 .concepts-select {
