@@ -29,9 +29,6 @@ export const displayIndexationsByColumn = () => {
             return record.uri === indexationColumnToDisplay.uri;
         })
         
-        hasIndexations = uriArray.length !== 0;
-        //const thesaurus = thesauri.find(t => t.identifier === indexationColumnToDisplay.thesaurus);
-        
         const li = document.createElement("li");
         li.className = "indexation-type-item";
         
@@ -99,10 +96,5 @@ export const displayIndexationsByColumn = () => {
         li.appendChild(conceptsDiv);
         ul.appendChild(li);
     });
-
-    if (!hasIndexations) {
-        displayNoExistingIndexations();
-    } else {
-        existingIndexationsList.appendChild(ul);
-    }
+    existingIndexationsList.appendChild(ul);
 }
