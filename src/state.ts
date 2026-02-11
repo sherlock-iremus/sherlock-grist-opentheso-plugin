@@ -14,6 +14,7 @@ export let currentRecord: GristRecord;
 export let configTable: ConfigurationTableData;
 export let technicalTableId: string;
 export let configTableRecords: FormattedConfigurationTableRecord[];
+export let currentColumn: FormattedConfigurationTableRecord;
 
 export const setConfigTableRecords = (newConfigTableRecords: FormattedConfigurationTableRecord[]) => {
     configTableRecords = newConfigTableRecords;
@@ -49,4 +50,8 @@ export const setColumns = (newColumns: FormattedGristColumn[]) => {
 
 export const setCurrentRecord = (record: GristRecord) => {
     currentRecord = record;
+}
+
+export const setCurrentColumn = (formattedConfigurationTableRecord: FormattedConfigurationTableRecord) => {
+    currentColumn = formattedConfigurationTableRecord;
 }

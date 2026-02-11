@@ -166,3 +166,12 @@ main {
 .broader-cell {
   padding: 4px;
 }
+
+.indexation-list .clickable {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.indexation-list .clickable:hover {
+    background-color: #e0e0e0; /* Couleur de survol */
+}

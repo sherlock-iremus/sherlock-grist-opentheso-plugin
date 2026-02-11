@@ -1,6 +1,6 @@
-import { configTableRecords, currentRecord, columns, thesauri } from "../state";
+import { configTableRecords, currentRecord, columns, thesauri, setCurrentColumn } from "../state";
 import { existingIndexationsList, selectedResourceLabel } from "./pluginHTMLElements";
-import { handleDeleteIndexationButtonClick } from "../handlers";
+import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen } from "../handlers";
 
 export const displayNoResourceSelected = () => {
     selectedResourceLabel.textContent = "Pas de ressource sélectionnée";
@@ -27,19 +27,25 @@ export const displayIndexationsByColumn = () => {
         const thesaurusId = (new URL(indexationColumnToDisplay.thesaurus)).searchParams.get("idt");
 
         const thesaurus = thesauri.find(t => t.idTheso === thesaurusId);
+
+        if (!thesaurus) {
+            console.error("Thesaurus not found :", indexationColumnToDisplay);
+            return;
+        }
+
         const thesaurusName = thesaurus?.labels.find(l => l.lang === "fr")?.title;
         const li = document.createElement("li");
         li.className = "indexation-type-item";
-        
+
         // Header avec label de la colonne et lien thésaurus
         const headerDiv = document.createElement("div");
         headerDiv.className = "indexation-type-line";
-        
+
         const colSpan = document.createElement("span");
         colSpan.className = "indexation-type-label";
         colSpan.textContent = indexationColumnToDisplay.label + ((thesaurusName || "Thésaurus non trouvé"));
         headerDiv.appendChild(colSpan);
-        
+
         const link = document.createElement("a");
         link.href = indexationColumnToDisplay.thesaurus;
         link.target = "_blank";
@@ -48,25 +54,25 @@ export const displayIndexationsByColumn = () => {
         link.style.marginLeft = "8px";
         link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir thésaurus" style="width:14px;height:14px;" />`;
         headerDiv.appendChild(link);
-        
+
         li.appendChild(headerDiv);
-        
+
         // Concepts
         const conceptsDiv = document.createElement("div");
         conceptsDiv.className = "indexation-concept-line";
-        
+
         uriArray.forEach((uri: string, index: number) => {
             const label = labelArray[index] || uri;
             console.log("afficher concept: " + uri);
-            
+
             const conceptSpan = document.createElement("span");
             conceptSpan.className = "indexation-concept";
-            
+
             const labelSpan = document.createElement("span");
             labelSpan.className = "indexation-concept-label";
             labelSpan.textContent = label;
             conceptSpan.appendChild(labelSpan);
-            
+
             const link = document.createElement("a");
             link.href = uri;
             link.target = "_blank";
@@ -74,16 +80,16 @@ export const displayIndexationsByColumn = () => {
             link.className = "indexation-concept-link";
             link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir" style="width:12px;height:12px;" />`;
             conceptSpan.appendChild(link);
-            
+
             const deleteBtn = document.createElement("button");
             deleteBtn.title = "Supprimer";
             deleteBtn.className = "indexation-concept-delete";
             deleteBtn.innerHTML = `<svg width="15" height="15" fill="none" stroke="#b33" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="6" x2="19" y2="6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/><rect x="6" y="6" width="12" height="14" rx="2"/></svg>`;
             deleteBtn.onclick = () => handleDeleteIndexationButtonClick(uri, index, indexationColumnToDisplay.uri, indexationColumnToDisplay.label);
             conceptSpan.appendChild(deleteBtn);
-            
+
             conceptsDiv.appendChild(conceptSpan);
-            
+
             if (index < uriArray.length - 1) {
                 const sep = document.createElement("span");
                 sep.className = "indexation-concept-separator";
@@ -91,9 +97,15 @@ export const displayIndexationsByColumn = () => {
                 conceptsDiv.appendChild(sep);
             }
         });
-        
+
+        li.addEventListener('click', () => {
+            handleIndexationTypeChosen(indexationColumnToDisplay, thesaurus);
+        });
+
         li.appendChild(conceptsDiv);
         ul.appendChild(li);
+
+
     });
     existingIndexationsList.replaceChildren(ul);
 }

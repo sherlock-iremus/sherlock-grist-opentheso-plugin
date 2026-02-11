@@ -1,8 +1,8 @@
 import { fetchThesauri, getConceptLabels, searchConceptsInThesaurus } from "../api/opentheso";
 import { handleSearchConceptsFetched, handleThesauriFetched } from "../handlers";
-import { currentRecord, currentThesaurus, thesauri } from "../state";
+import { currentRecord, currentThesaurus } from "../state";
 import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
-import { displayError, displayLoading, displaySearchResults } from "../views/thesaurusSearchConceptsView";
+import { displayError, displayLoading, displaySearchResults, displayThesaurusSelected } from "../views/thesaurusSearchConceptsView";
 import { closeSidebar, initializeSideBarView } from "../views/thesaurusSelectionView";
 
 export const initializeAndFetchThesauri = async () => {
@@ -16,6 +16,10 @@ export const initializeAndFetchThesauri = async () => {
 
 export const renderSelectedThesaurus = () => {
     closeSidebar();
+}
+
+export const renderSelectedIndexationType = () => {
+    displayThesaurusSelected();
 }
 
 export const searchConcepts = async (query: string) => {

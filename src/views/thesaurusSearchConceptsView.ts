@@ -1,9 +1,24 @@
-import { handleSelectOptionChange } from "../handlers";
-import { columns, conceptList, currentThesaurus } from "../state";
+import { conceptList, currentThesaurus } from "../state";
 import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
-import { searchResults } from "./pluginHTMLElements";
+import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
 
+// Display french label of the thesaurus if it exists, otherwise show the id. In an a Element linked to thesaurus on opentheso
+export const displayThesaurusSelected = () => {
+    const thesaurusSpan = document.createElement("span");
+
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = `Thésaurus sélectionné : ${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso}`;;
+    thesaurusSpan.appendChild(labelSpan);
+
+    const link = document.createElement("a");
+    link.href = `https://opentheso.huma-num.fr/?idt=${currentThesaurus.idTheso}`;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir" style="width:12px;height:12px;" />`;
+    thesaurusSpan.appendChild(link);
+    selectedThesaurusLabel.innerHTML = thesaurusSpan.innerHTML;
+}
 export const displayLoading = () => {
     searchResults.innerHTML = "Recherche...";
 }

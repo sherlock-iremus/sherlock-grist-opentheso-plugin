@@ -8,8 +8,8 @@
 
 import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns, getConfigTableAsRecords } from "./controller/gristController";
 import { addConceptToColumn, removeConceptFromColumn, renderSelectedRecord } from "./controller/recordController";
-import { initializeAndFetchThesauri, renderSearchResults, renderSelectedThesaurus, searchConcepts } from "./controller/thesaurusController";
-import { gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri, technicalTableId } from "./state";
+import { initializeAndFetchThesauri, renderSearchResults, renderSelectedIndexationType, renderSelectedThesaurus, searchConcepts } from "./controller/thesaurusController";
+import { gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentColumn, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri, technicalTableId } from "./state";
 import { GristRecord } from "./types/GristRecord";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
 import { Thesaurus } from "./types/Thesaurus";
@@ -51,6 +51,13 @@ export const handlePluginInitialization = async () => {
         handleNewRecord(record);
     });
 
+}
+
+export const handleIndexationTypeChosen = (indexationColumnToDisplay: FormattedConfigurationTableRecord, thesaurus: Thesaurus) => {
+    console.log("Indexation type chosen:", indexationColumnToDisplay);
+    setCurrentColumn(indexationColumnToDisplay);
+    setcurrentThesaurus(thesaurus);
+    renderSelectedIndexationType();
 }
 
 export const handleThesaurusClick = (thesaurus: Thesaurus) => {
