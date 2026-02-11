@@ -1,6 +1,6 @@
 import { handleSearchButtonClick, handleSearchInputKeydown } from "../handlers";
 import { thesauri } from "../state";
-import { filterInput, openSidebarBtn, searchBtn, searchInput, sidebar } from "./pluginHTMLElements";
+import { openSidebarBtn, searchBtn, searchInput, sidebar } from "./pluginHTMLElements";
 
 export const initializeSideBarView = () => {
     openSidebar();
@@ -9,13 +9,6 @@ export const initializeSideBarView = () => {
     searchBtn.addEventListener("click", () => handleSearchButtonClick(searchInput.value));
     searchInput.addEventListener("keydown", (e) => {
         handleSearchInputKeydown(e, searchInput.value);
-    });
-
-    filterInput.addEventListener("input", function () {
-        const filterText = this.value.toLowerCase();
-        const filtered = thesauri.filter(th =>
-            (th.labels?.find(l => l.lang === "fr")?.title || "").toLowerCase().includes(filterText)
-        );
     });
 }
 

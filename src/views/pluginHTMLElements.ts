@@ -13,5 +13,4 @@ export const selectedThesaurusLabel = getElementByIdOrThrow<HTMLSpanElement>("se
 export const thesaurusLink = getElementByIdOrThrow<HTMLAnchorElement>("thesaurusLink");
 export const searchInput = getElementByIdOrThrow<HTMLInputElement>("searchInput");
 export const searchBtn = getElementByIdOrThrow<HTMLButtonElement>("searchBtn");
-export const filterInput = getElementByIdOrThrow<HTMLInputElement>("filterInput");
 export const searchResults = getElementByIdOrThrow<HTMLPreElement>("searchResults");
