@@ -7,8 +7,6 @@ function getElementByIdOrThrow<T extends HTMLElement>(id: string): T {
 export const selectedResourceLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedResourceLabel");
 export const pluginConfigurationDiv = getElementByIdOrThrow<HTMLDivElement>("configWarning");
 export const existingIndexationsList = getElementByIdOrThrow<HTMLDivElement>("existingIndexationsList");
-export const sidebar = getElementByIdOrThrow<HTMLDivElement>("sidebar");
-export const openSidebarBtn = getElementByIdOrThrow<HTMLButtonElement>("openSidebarBtn");
 export const selectedThesaurusLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedThesaurusLabel");
 export const thesaurusLink = getElementByIdOrThrow<HTMLAnchorElement>("thesaurusLink");
 export const searchInput = getElementByIdOrThrow<HTMLInputElement>("searchInput");
