@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <title>Sherlock X Grist X Opentheso</title>
-  <script type="module" crossorigin src="/sherlock-grist-opentheso-plugin/assets/index-C7DkOBAZ.js"></script>
-  <link rel="stylesheet" crossorigin href="/sherlock-grist-opentheso-plugin/assets/index-CkV1pIrK.css">
+  <script type="module" crossorigin src="/sherlock-grist-opentheso-plugin/assets/index-CH_sD0z2.js"></script>
+  <link rel="stylesheet" crossorigin href="/sherlock-grist-opentheso-plugin/assets/index-DCZ98kus.css">
 </head>
 
 <body>
@@ -27,14 +27,21 @@
         <div id="content">
             <div style="display: flex; flex-direction: column; gap: 24px;">
                 <!-- Ressource et indexations existantes -->
-                <div id="existingIndexationsCol">
+                <div id="existingIndexationsCol" style="flex: 0 0 70%;">
                     <span style="font-weight:bold;">Ressource :</span>
                     <span id="selectedResourceLabel"></span>
 
                     <div id="configWarning" style="color:#b33; font-weight:bold; margin-bottom:8px; display:none;">
                     </div>
                     <!-- La liste des indexations existantes sera injectée ici -->
-                    <div id="existingIndexationsList"></div>
+                    <div id="existingIndexationsList" class="indexation-list"></div>
+                </div>
+                <div id="thesaurusCol" style="flex: 0 0 30%;">
+                    <span style="font-weight:bold;">Thésaurus sélectionné :</span>
+                    <span id="selectedThesaurusLabel"></span>
+                    <a id="thesaurusLink" href="#" target="_blank" style="margin-left:6px;vertical-align:middle;display:none;">
+                        <img src="./up-right-from-square.svg" />
+                    </a>
                 </div>
             </div>
         </div>
