@@ -3,21 +3,16 @@ import { handleSearchConceptsFetched, handleThesauriFetched } from "../handlers"
 import { currentRecord, currentThesaurus, thesauri } from "../state";
 import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
 import { displayError, displayLoading, displaySearchResults } from "../views/thesaurusSearchConceptsView";
-import { closeSidebar, displayThesauri, initializeThesauriView, showThesauriLoadingError } from "../views/thesaurusSelectionView";
+import { closeSidebar, initializeSideBarView } from "../views/thesaurusSelectionView";
 
 export const initializeAndFetchThesauri = async () => {
     try {
-        initializeThesauriView();
+        initializeSideBarView();
         fetchThesauri().then(fetchedThesauri => handleThesauriFetched(fetchedThesauri));
     } catch (error) {
-        showThesauriLoadingError();
         console.error(error);
     }
 };
-
-export const renderThesauriList = () => {
-    displayThesauri(thesauri);
-}
 
 export const renderSelectedThesaurus = () => {
     closeSidebar();

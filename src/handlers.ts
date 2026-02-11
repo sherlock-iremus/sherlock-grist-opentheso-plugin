@@ -8,7 +8,7 @@
 
 import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns, getConfigTableAsRecords } from "./controller/gristController";
 import { addConceptToColumn, removeConceptFromColumn, renderSelectedRecord } from "./controller/recordController";
-import { initializeAndFetchThesauri, renderSearchResults, renderSelectedThesaurus, renderThesauriList, searchConcepts } from "./controller/thesaurusController";
+import { initializeAndFetchThesauri, renderSearchResults, renderSelectedThesaurus, searchConcepts } from "./controller/thesaurusController";
 import { gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri, technicalTableId } from "./state";
 import { GristRecord } from "./types/GristRecord";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
@@ -70,9 +70,8 @@ export const handleSearchInputKeydown = (e: KeyboardEvent, query: string) => {
 }
 
 export const handleThesauriFetched = (fetchedThesauri: Thesaurus[]) => {
-    console.log("Thesauri fetched:", fetchedThesauri);
+    console.log("Thesauri fetched used to display thesauri labels :", fetchedThesauri);
     setThesauri(fetchedThesauri);
-    renderThesauriList();
 }
 
 export const handleSearchConceptsFetched = (concepts: OpenthesoConcept[]) => {

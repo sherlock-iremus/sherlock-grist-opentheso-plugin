@@ -52,8 +52,8 @@ const getRowForConcept = (concept: OpenthesoConcept) => {
     let idTheso = currentThesaurus.idTheso;
 
 
-    row.appendChild(getActionCellForConcept(conceptId, label));
-    row.appendChild(getConceptLabelCell(conceptId, label));
+    /*DELETE row.appendChild(getActionCellForConcept(conceptId, label));
+    row.appendChild(getConceptLabelCell(conceptId, label));*/
 
     const broaderCell = document.createElement("td");
     broaderCell.className = "broader-cell";

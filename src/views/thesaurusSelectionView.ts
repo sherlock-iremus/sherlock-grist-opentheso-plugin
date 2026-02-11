@@ -1,13 +1,8 @@
-import { handleSearchButtonClick, handleSearchInputKeydown, handleThesaurusClick } from "../handlers";
-import { currentThesaurus, thesauri } from "../state";
-import { Thesaurus } from "../types/Thesaurus";
-import { filterInput, openSidebarBtn, searchBtn, searchInput, selectedThesaurusLabel, sidebar, thesaurusLink, thesaurusList } from "./pluginHTMLElements";
+import { handleSearchButtonClick, handleSearchInputKeydown } from "../handlers";
+import { thesauri } from "../state";
+import { filterInput, openSidebarBtn, searchBtn, searchInput, sidebar } from "./pluginHTMLElements";
 
-export const showThesauriLoadingError = () => {
-    thesaurusList.innerText = "Erreur de chargement.";
-};
-
-export const initializeThesauriView = () => {
+export const initializeSideBarView = () => {
     openSidebar();
     openSidebarBtn.addEventListener("click", openSidebar);
 
@@ -21,11 +16,10 @@ export const initializeThesauriView = () => {
         const filtered = thesauri.filter(th =>
             (th.labels?.find(l => l.lang === "fr")?.title || "").toLowerCase().includes(filterText)
         );
-        displayThesauri(filtered);
     });
 }
 
-export const displayThesauri = (thesauri: Thesaurus[]) => {
+/*DELETE : export const displayThesauri = (thesauri: Thesaurus[]) => {
     thesaurusList.innerHTML = "";
     thesauri.forEach(th => {
         const item = document.createElement("div");
@@ -34,7 +28,7 @@ export const displayThesauri = (thesauri: Thesaurus[]) => {
         item.onclick = () => handleThesaurusClick(th);
         thesaurusList.appendChild(item);
     });
-}
+}*/
 
 // Ferme le sidebar et affiche le bouton d'ouverture
 export const closeSidebar = () => {
