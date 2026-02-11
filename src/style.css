@@ -1,86 +1,92 @@
 body {
-    font-family: sans-serif;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  font-family: sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 header {
-    padding: 10px;
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
 }
 
 main {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
 #sidebar {
-    width: 300px;
-    border-right: 1px solid #ccc;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow-y: auto;
-    transition: transform 0.3s;
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  width: 300px;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: transform 0.3s;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 #sidebar.closed {
-    transform: translateX(-100%);
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
+  transform: translateX(-100%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
 }
 
 #searchInput {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 #searchBtn {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 #searchResults {
-    flex: 1;
-    overflow: auto;
-    font-size: 0.9em;
+  flex: 1;
+  overflow: auto;
+  font-size: 0.9em;
 }
 
 #content {
-    flex: 1 1 0%;
-    padding: 10px;
-    margin-left: 20px;
-    overflow: auto;
-    transition: margin-left 0.3s;
+  flex: 1 1 0%;
+  padding: 10px;
+  margin-left: 20px;
+  overflow: auto;
+  transition: margin-left 0.3s;
 }
 
-#content > div {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    width: 100%;
+#content>div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
 }
 
 #existingIndexationsCol {
-    width: 100%;
+  width: 100%;
 }
 
 .indexation-type-item {
   margin-bottom: 8px;
   list-style-type: disc;
   font-size: 0.95em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.indexation-list .clickable:hover {
+  background-color: #e0e0e0;
 }
 
 .indexation-type-line {
@@ -165,13 +171,4 @@ main {
 
 .broader-cell {
   padding: 4px;
-}
-
-.indexation-list .clickable {
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.indexation-list .clickable:hover {
-    background-color: #e0e0e0; /* Couleur de survol */
 }

@@ -8,7 +8,7 @@ export const displayThesaurusSelected = () => {
     const thesaurusSpan = document.createElement("span");
 
     const labelSpan = document.createElement("span");
-    labelSpan.textContent = `Thésaurus sélectionné : ${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso}`;;
+    labelSpan.textContent = `${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso}`;
     thesaurusSpan.appendChild(labelSpan);
 
     const link = document.createElement("a");
