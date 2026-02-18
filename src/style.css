@@ -41,12 +41,6 @@ main {
   margin-bottom: 8px;
   list-style-type: disc;
   font-size: 0.95em;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.indexation-type-item:hover {
-  background-color: #e0e0e0;
 }
 
 .indexation-type-line {
@@ -67,9 +61,41 @@ main {
 }
 
 .indexation-concept {
+  font-size: 0.95em;
+}
+
+.indexation-concepts-list {
+  list-style: none;
+  padding-left: 0.8em;
+  margin: 0;
+}
+
+.indexation-concept-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.95em;
+}
+
+.indexation-add-btn {
+  background: #2b7cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
-  font-size: 0.95em;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.indexation-search {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 220px;
 }
 
 .indexation-concept-link img {
@@ -85,10 +111,6 @@ main {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-}
-
-.indexation-concept-separator {
-  margin: 0 2px;
 }
 
 .concepts-table {
