@@ -1,4 +1,4 @@
-import { conceptList, currentThesaurus } from "../state";
+import { conceptList, currentThesaurus, currentColumn, currentRecord } from "../state";
 import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
 import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
@@ -33,56 +33,81 @@ export const displaySearchResults = () => {
         return;
     }
 
-    const table = document.createElement("table");
-    table.className = "concepts-table";
-    table.border = "1";
-    table.innerHTML = `
-      <thead>
-        <tr>
-          <th style="padding:4px;">Indexation</th>
-          <th style="padding:4px;">skos:prefLabel</th>
-          <th style="padding:4px;">Terme plus générique</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    `;
+    const ul = document.createElement("ul");
+    ul.className = "search-results-list";
+    ul.style.listStyle = "none";
+    ul.style.padding = "0";
+    ul.style.margin = "0";
 
-
-    const tbody = table.querySelector("tbody");
-
-    tbody && conceptList.forEach(concept => {
-        tbody.appendChild(getRowForConcept(concept));
+    conceptList.forEach(concept => {
+        ul.appendChild(getLineForConcept(concept));
     });
 
     searchResults.innerHTML = "";
-    searchResults.appendChild(table);
+    searchResults.appendChild(ul);
 }
 
-const getRowForConcept = (concept: OpenthesoConcept) => {
-    const row = document.createElement("tr");
+const getLineForConcept = (concept: OpenthesoConcept) => {
+    const li = document.createElement("li");
+    li.className = "search-result-item";
+    li.style.padding = "8px";
+    li.style.borderBottom = "1px solid #e0e0e0";
+    li.style.display = "flex";
+    li.style.alignItems = "center";
+    li.style.justifyContent = "space-between";
 
-    const label = getLabelForConcept(concept)
+    const label = getLabelForConcept(concept);
     const broaderId = getBroaderIdForConcept(concept);
     const conceptId = getConceptIdForConcept(concept);
     let idTheso = currentThesaurus.idTheso;
 
+    // Left side: label with tooltip
+    const labelContainer = document.createElement("div");
+    labelContainer.style.flex = "1";
+    
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = label;
+    labelSpan.style.cursor = "pointer";
+    
+    // Add tooltip with broaderLabel if it exists
+    if (concept.broaderLabel) {
+        labelSpan.title = `Terme plus générique: ${concept.broaderLabel}`;
+        labelSpan.style.textDecoration = "underline";
+        labelSpan.style.textDecorationStyle = "dotted";
+    }
+    
+    labelContainer.appendChild(labelSpan);
+    li.appendChild(labelContainer);
 
-    /*DELETE row.appendChild(getActionCellForConcept(conceptId, label));
-    row.appendChild(getConceptLabelCell(conceptId, label));*/
+    // Right side: action button (+ or checkmark)
+    const actionContainer = document.createElement("div");
+    actionContainer.style.marginLeft = "12px";
 
-    const broaderCell = document.createElement("td");
-    broaderCell.className = "broader-cell";
-    broaderCell.textContent = broaderId ? "Chargement..." : "";
-    row.appendChild(broaderCell);
+    const isAlreadyIndexed = isConceptIndexed(conceptId);
+    
+    if (isAlreadyIndexed) {
+        const checkmark = document.createElement("span");
+        checkmark.textContent = "✓";
+        checkmark.style.color = "green";
+        checkmark.style.fontSize = "1.2em";
+        checkmark.style.fontWeight = "bold";
+        actionContainer.appendChild(checkmark);
+    } else {
+        const addBtn = document.createElement("button");
+        addBtn.textContent = "+";
+        addBtn.className = "concept-add-btn";
+        addBtn.style.padding = "4px 8px";
+        addBtn.style.cursor = "pointer";
+        addBtn.title = "Ajouter ce concept";
+        addBtn.onclick = (ev) => {
+            ev.stopPropagation();
+            // TODO: Handle add action
+        };
+        actionContainer.appendChild(addBtn);
+    }
 
-    if (concept.broaderLabel)
-        broaderCell.innerHTML =
-            `${concept.broaderLabel} <a href="https://opentheso.huma-num.fr/?idc=${broaderId}&idt=${idTheso}" target="_blank" rel="noopener"><img src="./up-right-from-square.svg"/></a>`;
-    else
-        broaderCell.innerHTML =
-            `Pas de label <a href="https://opentheso.huma-num.fr/?idc=${broaderId}&idt=${idTheso}" target="_blank" rel="noopener"><img src="./up-right-from-square.svg"/></a>`;
-
-    return row;
+    li.appendChild(actionContainer);
+    return li;
 }
 
 const getLabelForConcept = (concept: OpenthesoConcept) => {
@@ -91,6 +116,15 @@ const getLabelForConcept = (concept: OpenthesoConcept) => {
 
 const getConceptIdForConcept = (concept: OpenthesoConcept) => {
     return "https://opentheso.huma-num.fr" + concept["@id"].split('/').pop();
+}
+
+const isConceptIndexed = (conceptId: string): boolean => {
+    if (!currentColumn || !currentRecord) {
+        return false;
+    }
+    
+    const uriArray = currentRecord[currentColumn.uri]?.split(';').filter((uri: string) => uri.trim()) || [];
+    return uriArray.some((uri: string) => uri.trim() === conceptId);
 }
 
 /*const getIndexableLabelColumnsForConcept = (conceptId: string): FormattedGristColumn[] => {
