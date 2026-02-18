@@ -1,6 +1,6 @@
 import { configTableRecords, currentRecord, columns, thesauri, currentThesaurus } from "../state";
 import { existingIndexationsList, selectedResourceLabel } from "./pluginHTMLElements";
-import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen } from "../handlers";
+import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen, handleSearchInputKeydown } from "../handlers";
 import { Thesaurus } from "../types/Thesaurus";
 
 export const displayNoResourceSelected = () => {
@@ -106,6 +106,9 @@ const getIndexationColumnSearchBar = () => {
     searchInput.type = "search";
     searchInput.placeholder = "Rechercher un concept...";
     searchInput.className = "indexation-search";
+
+    searchInput.onkeydown = (e: KeyboardEvent) => handleSearchInputKeydown(e, searchInput.value);
+    setTimeout(() => searchInput.focus(), 0);
 
     return searchInput;
 }

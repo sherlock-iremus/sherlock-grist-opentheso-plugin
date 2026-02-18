@@ -61,11 +61,6 @@ export const handleIndexationTypeChosen = (indexationColumnToDisplay: FormattedC
     renderSelectedRecord();
 }
 
-export const handleSearchButtonClick = (query: string) => {
-    console.log("Searching concepts with query:", query);
-    searchConcepts(query);
-}
-
 export const handleSearchInputKeydown = (e: KeyboardEvent, query: string) => {
     console.log("Searching concepts with query:", query);
     if (e.key === "Enter") searchConcepts(query);
