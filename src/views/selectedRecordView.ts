@@ -33,6 +33,11 @@ export const displayIndexationsByColumn = () => {
             return;
         }
 
+        console.log(indexationColumnToDisplay)
+        console.log(uriArray)
+        console.log(labelArray)
+        console.log(currentRecord)
+
         const thesaurusName = thesaurus?.labels.find(l => l.lang === "fr")?.title;
         const li = document.createElement("li");
         li.className = "indexation-type-item";
@@ -43,7 +48,7 @@ export const displayIndexationsByColumn = () => {
 
         const colSpan = document.createElement("span");
         colSpan.className = "indexation-type-label";
-        colSpan.textContent = indexationColumnToDisplay.label + ((thesaurusName || "Thésaurus non trouvé"));
+        colSpan.textContent = indexationColumnToDisplay.label + '(' + (thesaurusName || "Thésaurus non trouvé") + ')';
         headerDiv.appendChild(colSpan);
 
         const link = document.createElement("a");
