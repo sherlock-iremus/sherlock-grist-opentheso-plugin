@@ -1,6 +1,7 @@
 import { configTableRecords, currentRecord, columns, thesauri, setCurrentColumn, currentThesaurus, setcurrentThesaurus } from "../state";
 import { existingIndexationsList, selectedResourceLabel } from "./pluginHTMLElements";
 import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen } from "../handlers";
+import { Thesaurus } from "../types/Thesaurus";
 
 export const displayNoResourceSelected = () => {
     selectedResourceLabel.textContent = "Pas de ressource sélectionnée";
@@ -32,7 +33,7 @@ export const displayIndexationsByColumn = () => {
             console.error("Thesaurus not found :", indexationColumnToDisplay);
             return;
         }
-        
+
         const thesaurusName = thesaurus?.labels.find(l => l.lang === "fr")?.title;
         const li = document.createElement("li");
         li.className = "indexation-type-item";
@@ -65,71 +66,77 @@ export const displayIndexationsByColumn = () => {
         conceptsUl.className = "indexation-concepts-list";
 
         uriArray.forEach((uri: string, index: number) => {
-            const label = labelArray[index] || uri;
-
-            const li = document.createElement("li");
-            li.className = "indexation-concept-item";
-
-            const labelSpan = document.createElement("span");
-            labelSpan.className = "indexation-concept-label";
-            labelSpan.textContent = label;
-            li.appendChild(labelSpan);
-
-            const link = document.createElement("a");
-            link.href = uri;
-            link.target = "_blank";
-            link.rel = "noopener";
-            link.className = "indexation-concept-link";
-            link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir" style="width:12px;height:12px;" />`;
-            li.appendChild(link);
-
-            const deleteBtn = document.createElement("button");
-            deleteBtn.title = "Supprimer";
-            deleteBtn.className = "indexation-concept-delete";
-            deleteBtn.innerHTML = `<svg width="15" height="15" fill="none" stroke="#b33" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="6" x2="19" y2="6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/><rect x="6" y="6" width="12" height="14" rx="2"/></svg>`;
-            deleteBtn.onclick = () => handleDeleteIndexationButtonClick(uri, index, indexationColumnToDisplay.uri, indexationColumnToDisplay.label);
-            li.appendChild(deleteBtn);
-
-            conceptsUl.appendChild(li);
+            conceptsUl.appendChild(getConceptListItem(labelArray, indexationColumnToDisplay, uri, index));
         });
 
         // Controls: search bar if current thesaurus matches, otherwise + button
         const controlsLi = document.createElement("li");
         controlsLi.className = "indexation-concept-item controls-item";
 
-        const thesaurusMatches = !!currentThesaurus && (currentThesaurus.idTheso === thesaurusId);
+        const isColumnCurrentlyEdited = !!currentThesaurus && (currentThesaurus.idTheso === thesaurusId);
 
-        if (thesaurusMatches) {
-            const searchInput = document.createElement("input");
-            searchInput.type = "search";
-            searchInput.placeholder = "Rechercher un concept...";
-            searchInput.className = "indexation-search";
-            controlsLi.appendChild(searchInput);
+        if (isColumnCurrentlyEdited) {
+            controlsLi.appendChild(getIndexationColumnSearchBar());
         } else {
-            const addBtn = document.createElement("button");
-            addBtn.className = "indexation-add-btn";
-            addBtn.title = "Sélectionner ce thésaurus";
-            addBtn.textContent = "+";
-            addBtn.onclick = (ev) => {
-                ev.stopPropagation();
-                setcurrentThesaurus(thesaurus);
-                setCurrentColumn(indexationColumnToDisplay);
-                handleIndexationTypeChosen(indexationColumnToDisplay, thesaurus);
-            };
-            controlsLi.appendChild(addBtn);
+            controlsLi.appendChild(getAddConceptButton(thesaurus, indexationColumnToDisplay));
         }
 
         conceptsUl.appendChild(controlsLi);
         conceptsDiv.appendChild(conceptsUl);
-
-        li.addEventListener('click', () => {
-            handleIndexationTypeChosen(indexationColumnToDisplay, thesaurus);
-        });
-
         li.appendChild(conceptsDiv);
         ul.appendChild(li);
-
-
     });
     existingIndexationsList.replaceChildren(ul);
+}
+
+const getAddConceptButton = (thesaurus: Thesaurus, indexationColumnToDisplay: FormattedConfigurationTableRecord) => {
+    const addBtn = document.createElement("button");
+    addBtn.className = "indexation-add-btn";
+    addBtn.title = "Sélectionner ce thésaurus";
+    addBtn.textContent = "+";
+    addBtn.onclick = (ev) => {
+        ev.stopPropagation();
+        setcurrentThesaurus(thesaurus);
+        setCurrentColumn(indexationColumnToDisplay);
+        handleIndexationTypeChosen(indexationColumnToDisplay, thesaurus);
+    };
+    return addBtn;
+}
+
+const getIndexationColumnSearchBar = () => {
+    const searchInput = document.createElement("input");
+    searchInput.type = "search";
+    searchInput.placeholder = "Rechercher un concept...";
+    searchInput.className = "indexation-search";
+
+    return searchInput;
+}
+
+const getConceptListItem = (labelArray: string[], indexationColumnToDisplay: FormattedConfigurationTableRecord, uri: string, index: number) => {
+    const label = labelArray[index] || uri;
+
+    const li = document.createElement("li");
+    li.className = "indexation-concept-item";
+
+    const labelSpan = document.createElement("span");
+    labelSpan.className = "indexation-concept-label";
+    labelSpan.textContent = label;
+    li.appendChild(labelSpan);
+
+    const link = document.createElement("a");
+    link.href = uri;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.className = "indexation-concept-link";
+    link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir" style="width:12px;height:12px;" />`;
+    li.appendChild(link);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.title = "Supprimer";
+    deleteBtn.className = "indexation-concept-delete";
+    deleteBtn.innerHTML = `<svg width="15" height="15" fill="none" stroke="#b33" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="6" x2="19" y2="6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/><rect x="6" y="6" width="12" height="14" rx="2"/></svg>`;
+    deleteBtn.onclick = () => handleDeleteIndexationButtonClick(uri, index, indexationColumnToDisplay.uri, indexationColumnToDisplay.label);
+    li.appendChild(deleteBtn);
+
+    return li;
 }
