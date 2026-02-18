@@ -58,6 +58,7 @@ export const handleIndexationTypeChosen = (indexationColumnToDisplay: FormattedC
     setCurrentColumn(indexationColumnToDisplay);
     setcurrentThesaurus(thesaurus);
     renderSelectedIndexationType();
+    renderSelectedRecord();
 }
 
 export const handleSearchButtonClick = (query: string) => {

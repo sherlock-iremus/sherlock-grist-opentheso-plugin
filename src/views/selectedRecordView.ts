@@ -1,4 +1,4 @@
-import { configTableRecords, currentRecord, columns, thesauri, setCurrentColumn, currentThesaurus, setcurrentThesaurus } from "../state";
+import { configTableRecords, currentRecord, columns, thesauri, currentThesaurus } from "../state";
 import { existingIndexationsList, selectedResourceLabel } from "./pluginHTMLElements";
 import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen } from "../handlers";
 import { Thesaurus } from "../types/Thesaurus";
@@ -44,7 +44,7 @@ export const displayIndexationsByColumn = () => {
 
         const colSpan = document.createElement("span");
         colSpan.className = "indexation-type-label";
-        colSpan.textContent = indexationTypeLabel + '(' + (thesaurusName || "Thésaurus non trouvé") + ')';
+        colSpan.textContent = indexationTypeLabel + ' (' + (thesaurusName || "Thésaurus non trouvé") + ')';
         headerDiv.appendChild(colSpan);
 
         const link = document.createElement("a");
@@ -96,8 +96,6 @@ const getAddConceptButton = (thesaurus: Thesaurus, indexationColumnToDisplay: Fo
     addBtn.textContent = "+";
     addBtn.onclick = (ev) => {
         ev.stopPropagation();
-        setcurrentThesaurus(thesaurus);
-        setCurrentColumn(indexationColumnToDisplay);
         handleIndexationTypeChosen(indexationColumnToDisplay, thesaurus);
     };
     return addBtn;

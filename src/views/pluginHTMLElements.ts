@@ -9,4 +9,4 @@ export const pluginConfigurationDiv = getElementByIdOrThrow<HTMLDivElement>("con
 export const existingIndexationsList = getElementByIdOrThrow<HTMLDivElement>("existingIndexationsList");
 export const selectedThesaurusLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedThesaurusLabel");
 export const thesaurusLink = getElementByIdOrThrow<HTMLAnchorElement>("thesaurusLink");
-export const searchResults = getElementByIdOrThrow<HTMLPreElement>("searchResults");
+export const searchResults = getElementByIdOrThrow<HTMLDivElement>("searchResults");

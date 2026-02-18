@@ -10,9 +10,9 @@
 <body>
     <main>
         <div id="content">
-            <div style="display: flex; flex-direction: column; gap: 24px;">
-                <!-- Ressource et indexations existantes -->
-                <div id="existingIndexationsCol" style="flex: 0 0 70%;">
+            <div style="display: flex; flex-direction: row; gap: 24px; width: 100%; height: 100%;">
+                <!-- Colonne gauche : Ressource et indexations existantes -->
+                <div id="existingIndexationsCol" style="flex: 1; overflow-y: auto; border-right: 1px solid #e0e0e0; padding-right: 20px;">
                     <span style="font-weight:bold;">Ressource :</span>
                     <span id="selectedResourceLabel"></span>
 
@@ -21,14 +21,14 @@
                     <!-- La liste des indexations existantes sera injectée ici -->
                     <div id="existingIndexationsList" class="indexation-list"></div>
                 </div>
-                <div id="thesaurusCol" style="flex: 0 0 30%;">
+                <!-- Colonne droite : Thésaurus et résultats de recherche -->
+                <div id="thesaurusCol" style="flex: 1; overflow-y: auto;">
                     <span style="font-weight:bold;">Thésaurus sélectionné :</span>
                     <span id="selectedThesaurusLabel"></span>
                     <a id="thesaurusLink" href="#" target="_blank" style="margin-left:6px;vertical-align:middle;display:none;">
                         <img src="./up-right-from-square.svg" />
                     </a>
-                    <pre id="searchResults">
-                    </pre>
+                    <div id="searchResults" style="margin-top: 16px;"></div>
                 </div>
             </div>
         </div>
