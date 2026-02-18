@@ -45,7 +45,7 @@ main {
   transition: background-color 0.3s;
 }
 
-.indexation-type-item :hover {
+li .indexation-type-item:hover {
   background-color: #e0e0e0;
 }
 

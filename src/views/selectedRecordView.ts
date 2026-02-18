@@ -23,7 +23,7 @@ export const displayIndexationsByColumn = () => {
     configTableRecords.forEach(indexationColumnToDisplay => {
         const uriArray = currentRecord[indexationColumnToDisplay.uri]?.split(';').filter((uri: string) => uri.trim()) || [];
         const labelArray = currentRecord[indexationColumnToDisplay.label]?.split(';').filter((label: string) => label.trim()) || [];
-        const indexationTypeLabel = columns.find(col => col.id === indexationColumnToDisplay.label)?.label || 'Type d\'indexation inconnu';
+        const indexationTypeLabel = columns.find(col => col.id === indexationColumnToDisplay.label)?.label || indexationColumnToDisplay.uri;
         const thesaurusId = (new URL(indexationColumnToDisplay.thesaurus)).searchParams.get("idt");
 
         const thesaurus = thesauri.find(t => t.idTheso === thesaurusId);
@@ -63,7 +63,6 @@ export const displayIndexationsByColumn = () => {
 
         uriArray.forEach((uri: string, index: number) => {
             const label = labelArray[index] || uri;
-            console.log("afficher concept: " + uri);
 
             const conceptSpan = document.createElement("span");
             conceptSpan.className = "indexation-concept";
@@ -87,15 +86,7 @@ export const displayIndexationsByColumn = () => {
             deleteBtn.innerHTML = `<svg width="15" height="15" fill="none" stroke="#b33" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="6" x2="19" y2="6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/><rect x="6" y="6" width="12" height="14" rx="2"/></svg>`;
             deleteBtn.onclick = () => handleDeleteIndexationButtonClick(uri, index, indexationColumnToDisplay.uri, indexationColumnToDisplay.label);
             conceptSpan.appendChild(deleteBtn);
-
             conceptsDiv.appendChild(conceptSpan);
-
-            if (index < uriArray.length - 1) {
-                const sep = document.createElement("span");
-                sep.className = "indexation-concept-separator";
-                sep.textContent = " ; ";
-                conceptsDiv.appendChild(sep);
-            }
         });
 
         li.addEventListener('click', () => {
