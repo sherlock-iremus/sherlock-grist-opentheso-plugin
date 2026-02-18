@@ -77,17 +77,20 @@ main {
   font-size: 0.95em;
 }
 
-.indexation-add-btn {
+.add-btn {
   background: #1DA270;
   color: white;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+}
+
+.indexation-add-btn {
   width: 28px;
   height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
 .indexation-search {

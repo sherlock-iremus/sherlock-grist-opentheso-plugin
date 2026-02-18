@@ -31,7 +31,7 @@ export const handleDeleteIndexationButtonClick = (concept: string, index: number
     removeConceptFromColumn(index, uriColId, labelColId);
 }
 
-export const handleSelectOptionChange = (conceptId: string, label: string, uriColId: string, labelColId: string) => {
+export const handleAddConceptClick = (conceptId: string, label: string, uriColId: string, labelColId: string) => {
     console.log("Add concept to column", uriColId, conceptId, label);
     addConceptToColumn(conceptId, label, uriColId, labelColId);
 }

@@ -91,7 +91,7 @@ export const displayIndexationsByColumn = () => {
 
 const getAddConceptButton = (thesaurus: Thesaurus, indexationColumnToDisplay: FormattedConfigurationTableRecord) => {
     const addBtn = document.createElement("button");
-    addBtn.className = "indexation-add-btn";
+    addBtn.className = "indexation-add-btn add-btn";
     addBtn.title = "Sélectionner ce thésaurus";
     addBtn.textContent = "+";
     addBtn.onclick = (ev) => {

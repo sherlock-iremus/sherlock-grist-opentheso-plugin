@@ -1,5 +1,5 @@
+import { handleAddConceptClick } from "../handlers";
 import { conceptList, currentThesaurus, currentColumn, currentRecord } from "../state";
-import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
 import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
 
@@ -54,16 +54,43 @@ const getLineForConcept = (concept: OpenthesoConcept) => {
     li.style.borderBottom = "1px solid #e0e0e0";
     li.style.display = "flex";
     li.style.alignItems = "center";
-    li.style.justifyContent = "space-between";
+    li.style.justifyContent = "flex-start";
+    li.style.gap = "8px";
 
     const label = getLabelForConcept(concept);
-    const broaderId = getBroaderIdForConcept(concept);
     const conceptId = getConceptIdForConcept(concept);
-    let idTheso = currentThesaurus.idTheso;
 
-    // Left side: label with tooltip
+    const actionContainer = document.createElement("div");
+    actionContainer.style.flexShrink = "0";
+
+    const isAlreadyIndexed = isConceptIndexed(conceptId);
+    
+    if (isAlreadyIndexed) {
+        const checkmark = document.createElement("span");
+        checkmark.textContent = "✓";
+        checkmark.style.color = "#1DA270";
+        checkmark.style.fontSize = "1.2em";
+        checkmark.style.fontWeight = "bold";
+        actionContainer.appendChild(checkmark);
+    } else {
+        const addBtn = document.createElement("button");
+        addBtn.textContent = "+";
+        addBtn.className = "add-btn";
+        addBtn.style.padding = "4px 8px";
+        addBtn.style.cursor = "pointer";
+        addBtn.title = "Ajouter ce concept";
+        addBtn.onclick = (ev) => {
+            ev.stopPropagation();
+            handleAddConceptClick(conceptId, label, currentColumn.uri, currentColumn.label);
+        };
+        actionContainer.appendChild(addBtn);
+    }
+
+    li.appendChild(actionContainer);
+
     const labelContainer = document.createElement("div");
     labelContainer.style.flex = "1";
+    labelContainer.style.minWidth = "0";
     
     const labelSpan = document.createElement("span");
     labelSpan.textContent = label;
@@ -79,34 +106,6 @@ const getLineForConcept = (concept: OpenthesoConcept) => {
     labelContainer.appendChild(labelSpan);
     li.appendChild(labelContainer);
 
-    // Right side: action button (+ or checkmark)
-    const actionContainer = document.createElement("div");
-    actionContainer.style.marginLeft = "12px";
-
-    const isAlreadyIndexed = isConceptIndexed(conceptId);
-    
-    if (isAlreadyIndexed) {
-        const checkmark = document.createElement("span");
-        checkmark.textContent = "✓";
-        checkmark.style.color = "green";
-        checkmark.style.fontSize = "1.2em";
-        checkmark.style.fontWeight = "bold";
-        actionContainer.appendChild(checkmark);
-    } else {
-        const addBtn = document.createElement("button");
-        addBtn.textContent = "+";
-        addBtn.className = "concept-add-btn";
-        addBtn.style.padding = "4px 8px";
-        addBtn.style.cursor = "pointer";
-        addBtn.title = "Ajouter ce concept";
-        addBtn.onclick = (ev) => {
-            ev.stopPropagation();
-            // TODO: Handle add action
-        };
-        actionContainer.appendChild(addBtn);
-    }
-
-    li.appendChild(actionContainer);
     return li;
 }
 
@@ -122,63 +121,7 @@ const isConceptIndexed = (conceptId: string): boolean => {
     if (!currentColumn || !currentRecord) {
         return false;
     }
-    
+
     const uriArray = currentRecord[currentColumn.uri]?.split(';').filter((uri: string) => uri.trim()) || [];
     return uriArray.some((uri: string) => uri.trim() === conceptId);
 }
-
-/*const getIndexableLabelColumnsForConcept = (conceptId: string): FormattedGristColumn[] => {
-    return columns
-        .filter(c => c.id.endsWith(LABEL_COLUMN_SUFFIX))
-        .filter(c => !indexations[c.id.replace(LABEL_COLUMN_SUFFIX, '')]?.some(item => item.uri_concept === conceptId));
-}
-
-const getAlreadyIndexedLabelColumns = (conceptId: string): FormattedGristColumn[] => {
-    return columns
-        .filter(c => c.id.endsWith(LABEL_COLUMN_SUFFIX))
-        .filter(c => indexations[c.id.replace(LABEL_COLUMN_SUFFIX, '')]?.some(item => item.uri_concept === conceptId));
-}*/
-
-const getOptionForColumn = (col: FormattedGristColumn) => {
-    const opt = document.createElement("option");
-    opt.value = col.id;
-    opt.textContent = col.label;
-    return opt;
-}
-
-/*const getActionCellForConcept = (conceptId: string, label: string) => {
-    const labelColumnsIndexable = getIndexableLabelColumnsForConcept(conceptId);
-    const alreadyIndexedLabelColumns = getAlreadyIndexedLabelColumns(conceptId);
-
-    const select = document.createElement("select");
-    select.className = "concepts-select";
-    select.innerHTML = `<option value="">Sélectionner...</option>`;
-    labelColumnsIndexable.forEach(col => {
-        select.appendChild(getOptionForColumn(col));
-    });
-
-    select.addEventListener("change", () => {
-        handleSelectOptionChange(conceptId, label, select.value);
-    });
-
-
-    const plural = alreadyIndexedLabelColumns.length > 1 ? 's' : ''
-    const infoDiv = document.createElement("div");
-    infoDiv.className = "concepts-info";
-    infoDiv.textContent = `${alreadyIndexedLabelColumns.length} colonne${plural} sélectionnée${plural}.`
-
-
-    const actionCell = document.createElement("td");
-    actionCell.className = "concepts-action-cell";
-    actionCell.appendChild(select);
-    actionCell.appendChild(infoDiv);
-    return actionCell;
-}
-
-const getConceptLabelCell = (conceptId: string, label: string) => {
-    const labelCell = document.createElement("td");
-    labelCell.className = "concepts-label-cell";
-    labelCell.innerHTML = `${label} <a href="${conceptId}" target="_blank" rel="noopener"><img src="./up-right-from-square.svg"/></a>`;
-    return labelCell;
-}*/
-
