@@ -1,6 +1,6 @@
 import { handleAddConceptClick } from "../handlers";
 import { conceptList, currentThesaurus, currentColumn, currentRecord } from "../state";
-import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
+import { OpenthesoConcept } from "../types/OpenthesoConcept";
 import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
 
 // Display french label of the thesaurus if it exists, otherwise show the id. In an a Element linked to thesaurus on opentheso

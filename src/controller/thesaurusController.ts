@@ -14,6 +14,7 @@ export const initializeAndFetchThesauri = async () => {
 
 export const renderSelectedIndexationType = () => {
     displayThesaurusSelected();
+    renderSearchResults();
 }
 
 export const searchConcepts = async (query: string) => {

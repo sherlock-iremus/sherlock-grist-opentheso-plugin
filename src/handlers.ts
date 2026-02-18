@@ -57,6 +57,7 @@ export const handleIndexationTypeChosen = (indexationColumnToDisplay: FormattedC
     console.log("Indexation type chosen:", indexationColumnToDisplay);
     setCurrentColumn(indexationColumnToDisplay);
     setcurrentThesaurus(thesaurus);
+    setConceptList([]);
     renderSelectedIndexationType();
     renderSelectedRecord();
 }
