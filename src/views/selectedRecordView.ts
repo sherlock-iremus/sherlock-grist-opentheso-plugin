@@ -23,7 +23,7 @@ export const displayIndexationsByColumn = () => {
     configTableRecords.forEach(indexationColumnToDisplay => {
         const uriArray = currentRecord[indexationColumnToDisplay.uri]?.split(';').filter((uri: string) => uri.trim()) || [];
         const labelArray = currentRecord[indexationColumnToDisplay.label]?.split(';').filter((label: string) => label.trim()) || [];
-
+        const indexationTypeLabel = columns.find(col => col.id === indexationColumnToDisplay.label)?.label || 'Type d\'indexation inconnu';
         const thesaurusId = (new URL(indexationColumnToDisplay.thesaurus)).searchParams.get("idt");
 
         const thesaurus = thesauri.find(t => t.idTheso === thesaurusId);
@@ -32,12 +32,7 @@ export const displayIndexationsByColumn = () => {
             console.error("Thesaurus not found :", indexationColumnToDisplay);
             return;
         }
-
-        console.log(indexationColumnToDisplay)
-        console.log(uriArray)
-        console.log(labelArray)
-        console.log(currentRecord)
-
+        
         const thesaurusName = thesaurus?.labels.find(l => l.lang === "fr")?.title;
         const li = document.createElement("li");
         li.className = "indexation-type-item";
@@ -48,7 +43,7 @@ export const displayIndexationsByColumn = () => {
 
         const colSpan = document.createElement("span");
         colSpan.className = "indexation-type-label";
-        colSpan.textContent = indexationColumnToDisplay.label + '(' + (thesaurusName || "Thésaurus non trouvé") + ')';
+        colSpan.textContent = indexationTypeLabel + '(' + (thesaurusName || "Thésaurus non trouvé") + ')';
         headerDiv.appendChild(colSpan);
 
         const link = document.createElement("a");
