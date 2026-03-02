@@ -7,12 +7,14 @@
  */
 
 import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns, getConfigTableAsRecords } from "./controller/gristController";
+import { generateLabelsForCurrentRecord } from "./controller/polishDataController";
 import { addConceptToColumn, removeConceptFromColumn, renderSelectedRecord } from "./controller/recordController";
 import { initializeAndFetchThesauri, renderSearchResults, renderSelectedIndexationType, searchConcepts } from "./controller/thesaurusController";
-import { gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentColumn, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri, technicalTableId } from "./state";
+import { currentRecord, gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentColumn, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri } from "./state";
 import { GristRecord } from "./types/GristRecord";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
 import { Thesaurus } from "./types/Thesaurus";
+import { generateLabelsButton } from "./views/pluginHTMLElements";
 
 export const handleNewRecord = (record: GristRecord) => {
     console.log("New record selected:", record);
@@ -36,6 +38,11 @@ export const handleAddConceptClick = (conceptId: string, label: string, uriColId
     addConceptToColumn(conceptId, label, uriColId, labelColId);
 }
 
+export const handleGenerateLabelsButtonClick = () => {
+    console.log("Generating labels for current record", currentRecord);
+    generateLabelsForCurrentRecord();
+}
+
 export const handlePluginInitialization = async () => {
     initializeAndFetchThesauri();
     
@@ -43,9 +50,11 @@ export const handlePluginInitialization = async () => {
     setGristTable(await grist.getTable());
     setColumns(await fetchTableColumns(gristTable))
     setConfigTable(await grist.docApi.fetchTable("CONFIG"))
-    //await grist.docApi.fetchTable(technicalTableId) // Fetch table aim the onRecord on the fetched table
     setConfigTableRecords(getConfigTableAsRecords());
     displayErrorsIfAnyConfigurationColumnMissing();
+    generateLabelsButton.addEventListener("click", () => {
+        handleGenerateLabelsButtonClick();
+    });
     
     grist.onRecord((record: GristRecord) => {
         handleNewRecord(record);
