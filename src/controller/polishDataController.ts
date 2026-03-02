@@ -4,7 +4,8 @@ import { updateRecordColumn } from "./recordController";
 
 export const generateLabelsForCurrentRecord = async () => {
     if (currentRecord) {
-        const updatedRecord: Partial<typeof currentRecord> = { id: currentRecord.id };
+        const updatedRecord: Partial<typeof currentRecord> = { };
+        const id = currentRecord.id;
         for (const configRecord of configTableRecords) {
             console.log("Processing column labels: ", configRecord.label);
             if (!currentRecord[configRecord.label])
@@ -29,6 +30,6 @@ export const generateLabelsForCurrentRecord = async () => {
                 console.log("Final labels for column ", configRecord.label, ": ", newLabels);
             }
         }
-        updateRecordColumn(updatedRecord);
+        updateRecordColumn(updatedRecord, id);
     }
 }

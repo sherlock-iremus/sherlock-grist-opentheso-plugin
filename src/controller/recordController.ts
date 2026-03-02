@@ -38,10 +38,10 @@ export const addConceptToColumn = (conceptId: string, label: string, uriColumnId
     }, { id: currentRecord.id })
 }
 
-export const updateRecordColumn = (record: Partial<typeof currentRecord>) => {
+export const updateRecordColumn = (record: Partial<typeof currentRecord>, id: number) => {
     if (!record.id) {
         console.error("No record selected to update.");
         return;
     }
-    upsertGristRecordApiCall(record, { id: record.id })
+    upsertGristRecordApiCall(record, { id: id })
 }
