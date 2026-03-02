@@ -9,7 +9,7 @@ export const generateLabelsForCurrentRecord = () => {
                 console.warn('Column does not exist: ', configRecord.label)
             else {
                 console.log("Current state: ", currentRecord[configRecord.label]);
-                currentRecord[configRecord.id].split(";").forEach((conceptId: string) => {
+                currentRecord[configRecord.uri].split(";").forEach((conceptId: string) => {
                     console.log("Fetching concept id label: ", conceptId);
                     const idThesaurus = (new URL(conceptId)).searchParams.get("idt");
                     const idConcept = (new URL(conceptId)).searchParams.get("idc");
