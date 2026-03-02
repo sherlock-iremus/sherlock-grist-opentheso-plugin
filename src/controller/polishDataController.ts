@@ -1,24 +1,34 @@
 import { getConceptLabels } from "../api/opentheso";
 import { configTableRecords, currentRecord } from "../state";
+import { updateRecordColumn } from "./recordController";
 
-export const generateLabelsForCurrentRecord = () => {
+export const generateLabelsForCurrentRecord = async () => {
     if (currentRecord) {
-        configTableRecords.forEach(configRecord => {
+        const updatedRecord: Partial<typeof currentRecord> = { id: currentRecord.id };
+        for (const configRecord of configTableRecords) {
             console.log("Processing column labels: ", configRecord.label);
             if (!currentRecord[configRecord.label])
                 console.warn('Column does not exist: ', configRecord.label)
             else {
                 console.log("Current state: ", currentRecord[configRecord.label]);
-                currentRecord[configRecord.uri].split(";").forEach((conceptId: string) => {
+                const newLabels = [];
+                for (const conceptId of currentRecord[configRecord.uri].split(";").filter((uri: string) => uri.trim())) {
                     console.log("Fetching concept id label: ", conceptId);
                     const idThesaurus = (new URL(conceptId)).searchParams.get("idt");
                     const idConcept = (new URL(conceptId)).searchParams.get("idc");
                     console.log("Extracted idThesaurus and idConcept: ", idThesaurus, idConcept);
-                    getConceptLabels(idThesaurus || "", idConcept || "").then(concept => {
-                        console.log("Fetched concept label: ", concept.label);
-                    });
-                });
+                    const openThesoLabel = await getConceptLabels(idThesaurus || "", idConcept || "")
+                    if (openThesoLabel && openThesoLabel.label) {
+                        console.log("Fetched concept label: ", openThesoLabel.label);
+                        newLabels.push(openThesoLabel.label);
+                    } else {
+                        console.warn("Label not found for concept id: ", conceptId);
+                    }
+                }
+                updatedRecord[configRecord.label] = newLabels.join(";");
+                console.log("Final labels for column ", configRecord.label, ": ", newLabels);
             }
-        })
+        }
+        updateRecordColumn(updatedRecord);
     }
 }
