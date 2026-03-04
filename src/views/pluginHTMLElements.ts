@@ -9,7 +9,6 @@ export const configWarningDiv = getElementByIdOrThrow<HTMLDivElement>("configWar
 export const configWarningList = getElementByIdOrThrow<HTMLUListElement>("configWarningList");
 export const existingIndexationsList = getElementByIdOrThrow<HTMLDivElement>("existingIndexationsList");
 export const selectedThesaurusLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedThesaurusLabel");
-export const thesaurusLink = getElementByIdOrThrow<HTMLAnchorElement>("thesaurusLink");
 export const searchResults = getElementByIdOrThrow<HTMLDivElement>("searchResults");
 export const generateLabelsButton = getElementByIdOrThrow<HTMLImageElement>("generateLabelsButton");
 export const contentDiv = getElementByIdOrThrow<HTMLDivElement>("content");
