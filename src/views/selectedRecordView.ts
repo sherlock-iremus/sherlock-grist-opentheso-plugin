@@ -1,15 +1,15 @@
 import { configTableRecords, currentRecord, columns, thesauri, currentThesaurus } from "../state";
-import { existingIndexationsList, selectedResourceLabel } from "./pluginHTMLElements";
+import { existingIndexationsList, selectedRecordLabel } from "./pluginHTMLElements";
 import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen, handleSearchInputKeydown } from "../handlers";
 import { Thesaurus } from "../types/Thesaurus";
 
-export const displayNoResourceSelected = () => {
-    selectedResourceLabel.textContent = "Pas de ressource sélectionnée";
+export const displayNoRecordSelected = () => {
+    selectedRecordLabel.textContent = "Pas de ligne sélectionnée";
     existingIndexationsList.innerHTML = "";
 }
 
-export const displaySelectedResourceLabel = () => {
-    selectedResourceLabel.textContent = currentRecord.UUID || "";
+export const displaySelectedRecordLabel = () => {
+    selectedRecordLabel.textContent = currentRecord?.id ? "Ligne n°" + currentRecord?.id : "";
 }
 
 export const displayNoExistingIndexations = () => {
