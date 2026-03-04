@@ -9,7 +9,7 @@ export const displayNoRecordSelected = () => {
 }
 
 export const displaySelectedRecordLabel = () => {
-    selectedRecordLabel.textContent = currentRecord?.id ? "Ligne n°" + currentRecord?.id : "";
+    selectedRecordLabel.textContent = currentRecord?.id ? "n°" + currentRecord?.id : "aucune";
 }
 
 export const displayNoExistingIndexations = () => {

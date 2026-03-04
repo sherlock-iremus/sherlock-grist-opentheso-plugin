@@ -4,13 +4,14 @@ import { OpenthesoConcept } from "../types/OpenthesoConcept";
 import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
 
 // Display french label of the thesaurus if it exists, otherwise show the id. In an a Element linked to thesaurus on opentheso
+export const externalLinkImageHtml = "<img src='./up-right-from-square.svg' alt='Ouvrir' style='width:12px;height:12px;' />";
 export const displayThesaurusSelected = () => {
     const link = document.createElement("a");
     link.href = `https://opentheso.huma-num.fr/?idt=${currentThesaurus.idTheso}`;
     link.target = "_blank";
     link.rel = "noopener";
-    link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir" style="width:12px;height:12px;" /> ${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso}`;
-    selectedThesaurusLabel.innerHTML = link.innerHTML;
+    link.innerHTML = `${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso} ${externalLinkImageHtml}`;
+    selectedThesaurusLabel.replaceChildren(link)
 }
 export const displayLoading = () => {
     searchResults.innerHTML = "Recherche...";
@@ -85,8 +86,10 @@ const getLineForConcept = (concept: OpenthesoConcept) => {
     labelContainer.style.minWidth = "0";
     
     const labelLink = document.createElement("a");
-    labelLink.textContent = label;
+    labelLink.innerHTML = `${label} ${externalLinkImageHtml}`;
     labelLink.style.cursor = "pointer";
+    labelLink.style.color = "inherit";
+    labelLink.style.textDecoration = "none";
     labelLink.href = conceptId;
     labelLink.target = "_blank";
     labelLink.rel = "noopener";
