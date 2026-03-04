@@ -69,7 +69,7 @@ export const displayErrorsIfAnyConfigurationColumnMissing = () => {
 
     if (uriColumnMissingList.length || labelColumnMissingList.length) {
         console.warn("Some URI | label columns are missing : ", uriColumnMissingList, labelColumnMissingList);
-        displayColumnsMissing(uriColumnMissingList, labelColumnMissingList);
+        displayColumnsMissing(labelColumnMissingList, uriColumnMissingList);
     } else {
         displayConfigurationOK();
     }
