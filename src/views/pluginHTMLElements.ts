@@ -4,10 +4,12 @@ function getElementByIdOrThrow<T extends HTMLElement>(id: string): T {
   return el as T;
 }
 
-export const selectedResourceLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedResourceLabel");
-export const pluginConfigurationDiv = getElementByIdOrThrow<HTMLDivElement>("configWarning");
+export const selectedRecordLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedRecordLabel");
+export const configWarningDiv = getElementByIdOrThrow<HTMLDivElement>("configWarningDiv");
+export const configWarningList = getElementByIdOrThrow<HTMLUListElement>("configWarningList");
 export const existingIndexationsList = getElementByIdOrThrow<HTMLDivElement>("existingIndexationsList");
 export const selectedThesaurusLabel = getElementByIdOrThrow<HTMLSpanElement>("selectedThesaurusLabel");
 export const thesaurusLink = getElementByIdOrThrow<HTMLAnchorElement>("thesaurusLink");
 export const searchResults = getElementByIdOrThrow<HTMLDivElement>("searchResults");
 export const generateLabelsButton = getElementByIdOrThrow<HTMLImageElement>("generateLabelsButton");
+export const contentDiv = getElementByIdOrThrow<HTMLDivElement>("content");

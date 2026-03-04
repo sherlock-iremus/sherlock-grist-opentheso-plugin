@@ -1,15 +1,15 @@
 import { upsertGristRecordApiCall } from "../api/grist";
 import { currentRecord } from "../state";
-import { displayIndexationsByColumn, displayNoResourceSelected, displaySelectedResourceLabel } from "../views/selectedRecordView";
+import { displayIndexationsByColumn, displayNoRecordSelected, displaySelectedRecordLabel } from "../views/selectedRecordView";
 import { displaySearchResults } from "../views/thesaurusSearchConceptsView";
 
 export const renderSelectedRecord = () => {
     if (!currentRecord) {
-        displayNoResourceSelected();
+        displayNoRecordSelected();
         return;
     }
 
-    displaySelectedResourceLabel();
+    displaySelectedRecordLabel();
     displayIndexationsByColumn();
     displaySearchResults();
 }

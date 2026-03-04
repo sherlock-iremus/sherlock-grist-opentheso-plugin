@@ -2,9 +2,8 @@ import { columns, configTable, configTableRecords, setTechnicalTableId, technica
 import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { GristTablesColumns } from "../types/grist";
 import { GristTable } from "../types/GristTable";
-import { RESOURCE_COLUMN_NAME } from "../utils/consts";
 import { indexesOf } from "../utils/indexesOf";
-import { displayColumnsMissing, displayConfigurationOK, displayResourceColumnMissing } from "../views/pluginConfigurationView";
+import { displayColumnsMissing, displayConfigurationOK } from "../views/pluginConfigurationView";
 
 /**
  * Plugin initialization, get all columns of the current table.
@@ -68,10 +67,7 @@ export const displayErrorsIfAnyConfigurationColumnMissing = () => {
         return !columns.some(col => col.id === record.label);
     });
 
-    if (!columns.map(col => col.id).includes(RESOURCE_COLUMN_NAME)) {
-        console.warn("Resource URI column is missing, this will cause issues.");
-        displayResourceColumnMissing();
-    } else if (uriColumnMissingList.length || labelColumnMissingList.length) {
+    if (uriColumnMissingList.length || labelColumnMissingList.length) {
         console.warn("Some URI | label columns are missing : ", uriColumnMissingList, labelColumnMissingList);
         displayColumnsMissing(uriColumnMissingList, labelColumnMissingList);
     } else {

@@ -31,7 +31,7 @@ export const searchConcepts = async (query: string) => {
     } catch (e) {
         let error
         if (!currentRecord) {
-            error = "Veuillez d'abord sélectionner une ressource."
+            error = "Veuillez d'abord sélectionner un record."
             console.error(error, currentThesaurus.idTheso, e);
         }
         else if (currentThesaurus && currentThesaurus.idTheso) {

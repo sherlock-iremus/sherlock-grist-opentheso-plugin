@@ -5,19 +5,12 @@ import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
 
 // Display french label of the thesaurus if it exists, otherwise show the id. In an a Element linked to thesaurus on opentheso
 export const displayThesaurusSelected = () => {
-    const thesaurusSpan = document.createElement("span");
-
-    const labelSpan = document.createElement("span");
-    labelSpan.textContent = `${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso}`;
-    thesaurusSpan.appendChild(labelSpan);
-
     const link = document.createElement("a");
     link.href = `https://opentheso.huma-num.fr/?idt=${currentThesaurus.idTheso}`;
     link.target = "_blank";
     link.rel = "noopener";
-    link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir" style="width:12px;height:12px;" />`;
-    thesaurusSpan.appendChild(link);
-    selectedThesaurusLabel.innerHTML = thesaurusSpan.innerHTML;
+    link.innerHTML = `<img src="./up-right-from-square.svg" alt="Ouvrir" style="width:12px;height:12px;" /> ${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso}`;
+    selectedThesaurusLabel.innerHTML = link.innerHTML;
 }
 export const displayLoading = () => {
     searchResults.innerHTML = "Recherche...";
@@ -50,8 +43,7 @@ export const displaySearchResults = () => {
 const getLineForConcept = (concept: OpenthesoConcept) => {
     const li = document.createElement("li");
     li.className = "search-result-item";
-    li.style.padding = "8px";
-    li.style.borderBottom = "1px solid #e0e0e0";
+    li.style.padding = "2px";
     li.style.display = "flex";
     li.style.alignItems = "center";
     li.style.justifyContent = "flex-start";
@@ -92,18 +84,14 @@ const getLineForConcept = (concept: OpenthesoConcept) => {
     labelContainer.style.flex = "1";
     labelContainer.style.minWidth = "0";
     
-    const labelSpan = document.createElement("span");
-    labelSpan.textContent = label;
-    labelSpan.style.cursor = "pointer";
+    const labelLink = document.createElement("a");
+    labelLink.textContent = label;
+    labelLink.style.cursor = "pointer";
+    labelLink.href = conceptId;
+    labelLink.target = "_blank";
+    labelLink.rel = "noopener";
     
-    // Add tooltip with broaderLabel if it exists
-    if (concept.broaderLabel) {
-        labelSpan.title = `Terme plus générique: ${concept.broaderLabel}`;
-        labelSpan.style.textDecoration = "underline";
-        labelSpan.style.textDecorationStyle = "dotted";
-    }
-    
-    labelContainer.appendChild(labelSpan);
+    labelContainer.appendChild(labelLink);
     li.appendChild(labelContainer);
 
     return li;

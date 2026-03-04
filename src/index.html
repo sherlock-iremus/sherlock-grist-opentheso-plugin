@@ -11,14 +11,12 @@
     <main>
         <div id="content">
             <div style="display: flex; flex-direction: row; gap: 24px; width: 100%; height: 100%;">
-                <!-- Colonne gauche : Ressource et indexations existantes -->
-                <div id="existingIndexationsCol" style="flex: 1; overflow-y: auto; border-right: 1px solid #e0e0e0; padding-right: 20px;">
-                    <span style="font-weight:bold;">Ressource :</span>
-                    <span id="selectedResourceLabel"></span>
+                <!-- Colonne gauche : Record  et indexations existantes -->
+                <div id="existingIndexationsCol"
+                    style="flex: 1; overflow-y: auto; border-right: 1px solid #e0e0e0; padding-right: 20px;">
+                    <span style="font-weight:bold;">Record :</span>
+                    <span id="selectedRecordLabel"></span>
                     <img id="generateLabelsButton" src="./actualize.svg"></img>
-
-                    <div id="configWarning" style="color:#b33; font-weight:bold; margin-bottom:8px; display:none;">
-                    </div>
                     <!-- La liste des indexations existantes sera injectée ici -->
                     <div id="existingIndexationsList" class="indexation-list"></div>
                 </div>
@@ -26,15 +24,22 @@
                 <div id="thesaurusCol" style="flex: 0.7; overflow-y: auto;">
                     <span style="font-weight:bold;">Thésaurus sélectionné :</span>
                     <span id="selectedThesaurusLabel"></span>
-                    <a id="thesaurusLink" href="#" target="_blank" style="margin-left:6px;vertical-align:middle;display:none;">
+                    <a id="thesaurusLink" href="#" target="_blank"
+                        style="margin-left:6px;vertical-align:middle;display:none;">
                         <img src="./up-right-from-square.svg" />
                     </a>
                     <div id="searchResults" style="margin-top: 16px;"></div>
                 </div>
             </div>
         </div>
+        <div id="configWarningDiv" style="display:none;">
+            <h5 style="font-weight:bold;">⚠️ Problème de configuration du plugin. Veuillez créer les colonnes suivantes</h5>
+            <ul id="configWarningList">
+            </ul>
+        </div>
     </main>
 </body>
 <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
 <script type="module" src="./index.ts"></script>
+
 </html>

@@ -9,7 +9,7 @@ Le tutoriel suivant explique comment créer une table d'indexation avec des conc
 4. Menu "Choisir un widget personnalisé", sélectionner l'option "Ajouter votre propre widget URL personnalisée", et remplir avec l'URL https://sherlock-iremus.github.io/sherlock-grist-opentheso-plugin/
 5. "Le widget a besoin de full access à ce document."  -> "Accepter"
 6. Créer une colonne `CONFIG_OPENTHESO`
-7. Renommer et donner le nom "UUID" à la colonne qui contient votre ressource indexée.
+7. Renommer et donner le nom "UUID" à la colonne qui contient votre record indexé.
 8. Pour chacun des types d'indexation, créer deux colonnes : `<type_indexation>` et `<type_indexation_prefLabel>`. Exemple `technique_utilisee` et `technique_utilisee_prefLabel`, qui recevront des concepts d'un thesaurus des techniques de gravure. 
 
 ⚠️ Chaque colonne ajoutée **après** installation du plugin se sera pas visible par défaut par le plugin. Pour ce faire, cliquez sur la vue du plugin, dans le panneau de création onglet "Personnalisée" -> "Colonnes cachées".
