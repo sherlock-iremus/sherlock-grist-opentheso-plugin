@@ -2,6 +2,7 @@ import { configTableRecords, currentRecord, columns, thesauri, currentThesaurus 
 import { existingIndexationsList, selectedRecordLabel } from "./pluginHTMLElements";
 import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen, handleSearchInputKeydown } from "../handlers";
 import { Thesaurus } from "../types/Thesaurus";
+import { externalLinkImageHtml } from "./thesaurusSearchConceptsView";
 
 export const displayNoRecordSelected = () => {
     selectedRecordLabel.textContent = "Pas de ligne sélectionnée";
@@ -163,13 +164,16 @@ const getConceptRow = (
 
     const conceptTd = document.createElement("td");
 
-    const link = document.createElement("a");
-    link.href = uri;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.textContent = label;
-
-    conceptTd.appendChild(link);
+    const labelLink = document.createElement("a");
+    labelLink.innerHTML = `${label} ${externalLinkImageHtml}`;
+    labelLink.style.cursor = "pointer";
+    labelLink.style.color = "inherit";
+    labelLink.style.textDecoration = "none";
+    labelLink.href = uri;
+    labelLink.target = "_blank";
+    labelLink.rel = "noopener";
+    
+    conceptTd.appendChild(labelLink);
 
     tr.appendChild(conceptTd);
 
