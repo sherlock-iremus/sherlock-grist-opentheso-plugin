@@ -159,3 +159,25 @@ main {
   height:24px;
   cursor: pointer;
 }
+
+.indexation-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.indexation-type-header td {
+    padding: 8px;
+    font-weight: 600;
+    border-top: 2px solid #ddd;
+    background: #f8f8f8;
+}
+
+.indexation-concept-row td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.indexation-concept-row td:last-child {
+    width: 40px;
+    text-align: center;
+}
