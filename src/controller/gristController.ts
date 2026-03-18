@@ -3,7 +3,7 @@ import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { GristTablesColumns } from "../types/grist";
 import { GristTable } from "../types/GristTable";
 import { indexesOf } from "../utils/indexesOf";
-import { displayColumnsMissing, displayConfigurationOK } from "../views/pluginConfigurationView";
+import { displayColumnsMissing, displayConfigurationOK, displayMalformedConfigurationTable } from "../views/pluginConfigurationView";
 
 /**
  * Plugin initialization, get all columns of the current table.
@@ -67,7 +67,10 @@ export const displayErrorsIfAnyConfigurationColumnMissing = () => {
         return !columns.some(col => col.id === record.label);
     });
 
-    if (uriColumnMissingList.length || labelColumnMissingList.length) {
+    if (configTableRecords.some(record => Object.values(record).some(value => value === null || value === undefined || value === ""))) {
+        console.warn("Some configuration fields are empty : ", configTableRecords);
+        displayMalformedConfigurationTable();
+    } else if (uriColumnMissingList.length || labelColumnMissingList.length) {
         console.warn("Some URI | label columns are missing : ", uriColumnMissingList, labelColumnMissingList);
         displayColumnsMissing(labelColumnMissingList, uriColumnMissingList);
     } else {

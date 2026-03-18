@@ -1,5 +1,5 @@
 import { handleAddConceptClick } from "../handlers";
-import { conceptList, currentThesaurus, currentColumn, currentRecord } from "../state";
+import { conceptList, currentThesaurus, currentColumn, currentRecord, searchQuery } from "../state";
 import { OpenthesoConcept } from "../types/OpenthesoConcept";
 import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
 
@@ -22,8 +22,11 @@ export const displayError = (error: string) => {
 }
 
 export const displaySearchResults = () => {
-    if (!Array.isArray(conceptList) || conceptList.length === 0) {
-        searchResults.innerHTML = "Aucun résultat.";
+    if (!Array.isArray(conceptList)) {
+        searchResults.innerHTML = "Saisir votre recherche."; 
+        return;
+    } else if (conceptList.length === 0) {
+        searchResults.innerHTML = `Aucun résultat contenant "${searchQuery}".`;
         return;
     }
 
@@ -44,17 +47,12 @@ export const displaySearchResults = () => {
 const getLineForConcept = (concept: OpenthesoConcept) => {
     const li = document.createElement("li");
     li.className = "search-result-item";
-    li.style.padding = "2px";
-    li.style.display = "flex";
-    li.style.alignItems = "center";
-    li.style.justifyContent = "flex-start";
-    li.style.gap = "8px";
 
     const label = getLabelForConcept(concept);
     const conceptId = getConceptIdForConcept(concept);
 
     const actionContainer = document.createElement("div");
-    actionContainer.style.flexShrink = "0";
+    li.className = "action-container-div";
 
     const isAlreadyIndexed = isConceptIndexed(conceptId);
     

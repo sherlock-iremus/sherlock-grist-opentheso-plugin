@@ -20,7 +20,7 @@ export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: strin
     const urisArray = currentRecord[uriColumnId].split(';');
     urisArray.splice(conceptIndex, 1);
     const newUrisString = urisArray.join(';');
-    
+
     const labelsArray = currentRecord[labelColumnId].split(';');
     labelsArray.splice(conceptIndex, 1);
     const newLabelsString = labelsArray.join(';');
@@ -33,8 +33,12 @@ export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: strin
 
 export const addConceptToColumn = (conceptId: string, label: string, uriColumnId: string, labelColumnId: string) => {
     upsertGristRecordApiCall({
-        [uriColumnId]: currentRecord[uriColumnId] + ';' + conceptId,
-        [labelColumnId]: currentRecord[labelColumnId] + ';' + label
+        [uriColumnId]: (currentRecord[uriColumnId] ? currentRecord[uriColumnId].split(';') : [])
+            .concat([conceptId])
+            .join(';'),
+        [labelColumnId]: (currentRecord[labelColumnId] ? currentRecord[labelColumnId].split(';') : [])
+            .concat([label])
+            .join(';')
     }, { id: currentRecord.id })
 }
 

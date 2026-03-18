@@ -180,3 +180,16 @@ main {
     width: 40px;
     text-align: center;
 }
+
+.search-result-item {
+  padding: "2px";
+  display: "flex";
+  align-items: "center";
+  justify-content: "flex-start";
+  gap: "8px";
+}
+
+.action-container-div {
+  width: 30px;
+  text-align: center;
+}

@@ -1,7 +1,7 @@
-import { fetchThesauri, getConceptLabels, searchConceptsInThesaurus } from "../api/opentheso";
+import { fetchThesauri, searchConceptsInThesaurus } from "../api/opentheso";
 import { handleSearchConceptsFetched, handleThesauriFetched } from "../handlers";
-import { currentRecord, currentThesaurus } from "../state";
-import { getBroaderIdForConcept, OpenthesoConcept } from "../types/OpenthesoConcept";
+import { currentThesaurus, setSearchQuery } from "../state";
+import { OpenthesoConcept } from "../types/OpenthesoConcept";
 import { displayError, displayLoading, displaySearchResults, displayThesaurusSelected } from "../views/thesaurusSearchConceptsView";
 
 export const initializeAndFetchThesauri = async () => {
@@ -22,24 +22,13 @@ export const searchConcepts = async (query: string) => {
     displayLoading()
     try {
         const concepts: OpenthesoConcept[] = await searchConceptsInThesaurus(currentThesaurus.idTheso, query);
-        await Promise.all(concepts.map(async concept => {
-            const broaderId = getBroaderIdForConcept(concept);
-            if (broaderId) concept.broaderLabel = (await getConceptLabels(currentThesaurus.idTheso, broaderId)).label;
-            return concept;
-        }))
+        setSearchQuery(query); 
         handleSearchConceptsFetched(concepts);
     } catch (e) {
-        let error
-        if (!currentRecord) {
-            error = "Veuillez d'abord sélectionner un record."
-            console.error(error, currentThesaurus.idTheso, e);
-        }
-        else if (currentThesaurus && currentThesaurus.idTheso) {
+        let error = "Erreur inconnue";
+        if (currentThesaurus && currentThesaurus.idTheso) {
             error = "Erreur lors de la recherche dans le thésaurus."
             console.error(error, currentThesaurus.idTheso, e);
-        } else {
-            error = "Veuillez d'abord sélectionner un thésaurus."
-            console.error(error);
         }
         displayError(error)
     }

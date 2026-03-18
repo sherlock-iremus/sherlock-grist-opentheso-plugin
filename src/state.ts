@@ -15,7 +15,11 @@ export let configTable: ConfigurationTableData;
 export let technicalTableId: string;
 export let configTableRecords: FormattedConfigurationTableRecord[];
 export let currentColumn: FormattedConfigurationTableRecord;
+export let searchQuery: string;
 
+export const setSearchQuery = (query: string) => {
+    searchQuery = query;
+}
 export const setConfigTableRecords = (newConfigTableRecords: FormattedConfigurationTableRecord[]) => {
     configTableRecords = newConfigTableRecords;
 }
