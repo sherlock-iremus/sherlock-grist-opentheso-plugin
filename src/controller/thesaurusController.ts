@@ -2,7 +2,7 @@ import { fetchThesauri, searchConceptsInThesaurus } from "../api/opentheso";
 import { handleSearchConceptsFetched, handleThesauriFetched } from "../handlers";
 import { currentThesaurus, setSearchQuery } from "../state";
 import { OpenthesoConcept } from "../types/OpenthesoConcept";
-import { displayError, displayLoading, displaySearchResults, displayThesaurusSelected } from "../views/thesaurusSearchConceptsView";
+import { displayError, displayLoading, displaySearchResults } from "../views/thesaurusSearchConceptsView";
 
 export const initializeAndFetchThesauri = async () => {
     try {
@@ -13,7 +13,6 @@ export const initializeAndFetchThesauri = async () => {
 };
 
 export const renderSelectedIndexationType = () => {
-    displayThesaurusSelected();
     renderSearchResults();
 }
 

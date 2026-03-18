@@ -10,7 +10,7 @@ import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns, getCon
 import { generateLabelsForCurrentRecord } from "./controller/polishDataController";
 import { addConceptToColumn, removeConceptFromColumn, renderSelectedRecord } from "./controller/recordController";
 import { initializeAndFetchThesauri, renderSearchResults, renderSelectedIndexationType, searchConcepts } from "./controller/thesaurusController";
-import { currentRecord, gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentColumn, setCurrentRecord, setcurrentThesaurus, setGristTable, setThesauri } from "./state";
+import { currentRecord, gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentColumn, setCurrentRecord, setcurrentThesaurus, setGristTable, setSearchQuery, setThesauri } from "./state";
 import { GristRecord } from "./types/GristRecord";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
 import { Thesaurus } from "./types/Thesaurus";
@@ -67,6 +67,7 @@ export const handleIndexationTypeChosen = (indexationColumnToDisplay: FormattedC
     setCurrentColumn(indexationColumnToDisplay);
     setcurrentThesaurus(thesaurus);
     setConceptList([]);
+    setSearchQuery("");
     renderSelectedIndexationType();
     renderSelectedRecord();
 }

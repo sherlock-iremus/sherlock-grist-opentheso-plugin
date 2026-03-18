@@ -1,18 +1,11 @@
 import { handleAddConceptClick } from "../handlers";
-import { conceptList, currentThesaurus, currentColumn, currentRecord, searchQuery } from "../state";
+import { conceptList, currentColumn, currentRecord, searchQuery } from "../state";
 import { OpenthesoConcept } from "../types/OpenthesoConcept";
-import { searchResults, selectedThesaurusLabel } from "./pluginHTMLElements";
+import { searchResults } from "./pluginHTMLElements";
 
 // Display french label of the thesaurus if it exists, otherwise show the id. In an a Element linked to thesaurus on opentheso
 export const externalLinkImageHtml = "<img src='./up-right-from-square.svg' alt='Ouvrir' style='width:12px;height:12px;' />";
-export const displayThesaurusSelected = () => {
-    const link = document.createElement("a");
-    link.href = `https://opentheso.huma-num.fr/?idt=${currentThesaurus.idTheso}`;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.innerHTML = `${currentThesaurus.labels.find(l => l.lang === "fr")?.title || currentThesaurus.idTheso} ${externalLinkImageHtml}`;
-    selectedThesaurusLabel.replaceChildren(link)
-}
+
 export const displayLoading = () => {
     searchResults.innerHTML = "Recherche...";
 }
@@ -22,7 +15,7 @@ export const displayError = (error: string) => {
 }
 
 export const displaySearchResults = () => {
-    if (!Array.isArray(conceptList)) {
+    if (searchQuery.trim() === "") {
         searchResults.innerHTML = "Saisir votre recherche."; 
         return;
     } else if (conceptList.length === 0) {
@@ -52,7 +45,7 @@ const getLineForConcept = (concept: OpenthesoConcept) => {
     const conceptId = getConceptIdForConcept(concept);
 
     const actionContainer = document.createElement("div");
-    li.className = "action-container-div";
+    actionContainer.className = "action-container-div";
 
     const isAlreadyIndexed = isConceptIndexed(conceptId);
     
