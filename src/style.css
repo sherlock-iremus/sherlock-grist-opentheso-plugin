@@ -194,4 +194,5 @@ main {
 .action-container-div {
   width: 30px;
   text-align: center;
+  min-height: 25px;
 }
