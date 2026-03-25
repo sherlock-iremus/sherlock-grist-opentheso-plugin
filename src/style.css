@@ -83,7 +83,6 @@ main {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  padding: 4px 8px;
 }
 
 .indexation-add-btn {
@@ -195,4 +194,5 @@ main {
   width: 30px;
   text-align: center;
   min-height: 28px;
+  display: flex;
 }
