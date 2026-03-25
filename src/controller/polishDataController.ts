@@ -8,7 +8,7 @@ export const generateLabelsForCurrentRecord = async () => {
         const id = currentRecord.id;
         for (const configRecord of configTableRecords) {
             console.log("Processing column labels: ", configRecord.label);
-            if (configRecord.label in currentRecord)
+            if (!(configRecord.label in currentRecord))
                 console.warn('Column does not exist: ', configRecord.label)
             else {
                 console.log("Current state: ", currentRecord[configRecord.label]);
