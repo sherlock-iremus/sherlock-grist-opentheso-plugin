@@ -1,0 +1,1 @@
+export const trashcanIconClass = "fa-solid fa-trash-can";
