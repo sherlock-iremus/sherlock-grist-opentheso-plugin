@@ -47,9 +47,6 @@ export const handlePluginInitialization = async () => {
     initializeAndFetchThesauri();
 
     grist.ready({ requiredAccess: "full" });
-    grist.onRecord((record: GristRecord) => {
-        handleNewRecord(record);
-    });
     setGristTable(await grist.getTable());
     setColumns(await fetchTableColumns(gristTable))
     setConfigTable(await grist.docApi.fetchTable("CONFIG"))
@@ -59,6 +56,9 @@ export const handlePluginInitialization = async () => {
         handleGenerateLabelsButtonClick();
     });
 
+    grist.onRecord((record: GristRecord) => {
+        handleNewRecord(record);
+    });
 
 
 }
