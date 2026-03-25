@@ -3,7 +3,7 @@ import { existingIndexationsList, selectedRecordLabel } from "./pluginHTMLElemen
 import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen, handleSearchInputKeydown } from "../handlers";
 import { Thesaurus } from "../types/Thesaurus";
 import { externalLinkImageHtml } from "./thesaurusSearchConceptsView";
-import { trashcanIconClass } from "./components/icons";
+import { getAddButtonElement, trashcanIconClass } from "./components/icons";
 
 export const displayNoRecordSelected = () => {
     selectedRecordLabel.textContent = "Pas de ligne sélectionnée";
@@ -124,10 +124,9 @@ export const displayIndexationsByColumn = () => {
 };
 
 const getAddConceptButton = (thesaurus: Thesaurus, indexationColumnToDisplay: FormattedConfigurationTableRecord) => {
-    const addBtn = document.createElement("button");
-    addBtn.className = "indexation-add-btn add-btn";
+    const addBtn = getAddButtonElement()
+    addBtn.className = addBtn.className + " indexation-add-btn";
     addBtn.title = "Sélectionner ce thésaurus";
-    addBtn.textContent = "+";
     addBtn.onclick = (ev) => {
         ev.stopPropagation();
         handleIndexationTypeChosen(indexationColumnToDisplay, thesaurus);
