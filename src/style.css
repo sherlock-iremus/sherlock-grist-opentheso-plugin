@@ -20,10 +20,10 @@ main {
 
 #content {
   flex: 1 1 0%;
-  padding: 10px;
   overflow: hidden;
   transition: margin-left 0.3s;
 }
+
 
 #content>div {
   display: flex;
@@ -34,6 +34,10 @@ main {
 
 #existingIndexationsCol {
   width: 100%;
+}
+
+.technical-text {
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .indexation-type-item {
@@ -78,9 +82,9 @@ main {
 }
 
 .add-btn {
-  background: #1DA270;
-  color: white;
-  border: none;
+  background: transparent;
+  color: #1DA270;
+  border: 1px solid #1DA270;
   border-radius: 4px;
   cursor: pointer;
   padding: 4px 4px;
@@ -170,12 +174,11 @@ main {
 .indexation-type-header td {
     padding: 8px;
     font-weight: 600;
-    border-top: 2px solid #ddd;
+    border-bottom: 1px solid #eee;
 }
 
 .indexation-concept-row td {
     padding: 6px 8px;
-    border-bottom: 1px solid #eee;
 }
 
 .indexation-concept-row td:last-child {
