@@ -177,8 +177,8 @@ main {
     border-top: 1px solid #eee;
 }
 
-.indexation-concept-row td {
-    padding: 6px 8px;
+.indexation-table td {
+    padding: 4px 6px;
 }
 
 .indexation-concept-row td:last-child {
