@@ -38,7 +38,7 @@ export const displaySearchResults = () => {
 }
 
 const getLineForConcept = (concept: OpenthesoConcept) => {
-    const li = document.createElement("li");
+    const li = document.createElement("div");
     li.className = "search-result-item";
 
     const label = getLabelForConcept(concept);
