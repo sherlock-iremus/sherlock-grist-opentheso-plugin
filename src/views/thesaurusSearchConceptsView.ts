@@ -1,6 +1,7 @@
 import { handleAddConceptClick } from "../handlers";
 import { conceptList, currentColumn, currentRecord, searchQuery } from "../state";
 import { OpenthesoConcept } from "../types/OpenthesoConcept";
+import { checkmarkIconClass, plusIconClass } from "./components/icons";
 import { searchResults } from "./pluginHTMLElements";
 
 // Display french label of the thesaurus if it exists, otherwise show the id. In an a Element linked to thesaurus on opentheso
@@ -50,18 +51,16 @@ const getLineForConcept = (concept: OpenthesoConcept) => {
     const isAlreadyIndexed = isConceptIndexed(conceptId);
     
     if (isAlreadyIndexed) {
-        const checkmark = document.createElement("span");
-        checkmark.textContent = "✓";
+        const checkmark = document.createElement("i");
+        checkmark.className = checkmarkIconClass;
         checkmark.style.color = "#1DA270";
-        checkmark.style.fontSize = "1.2em";
-        checkmark.style.fontWeight = "bold";
         actionContainer.appendChild(checkmark);
     } else {
         const addBtn = document.createElement("button");
-        addBtn.textContent = "+";
+        const addIcon = document.createElement("i");
+        addIcon.className = plusIconClass;
+        addBtn.appendChild(addIcon);
         addBtn.className = "add-btn";
-        addBtn.style.padding = "4px 8px";
-        addBtn.style.cursor = "pointer";
         addBtn.title = "Ajouter ce concept";
         addBtn.onclick = (ev) => {
             ev.stopPropagation();
