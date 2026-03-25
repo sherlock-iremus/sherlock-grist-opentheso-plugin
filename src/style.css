@@ -182,11 +182,11 @@ main {
 }
 
 .search-result-item {
-  padding: "2px";
-  display: "flex";
-  align-items: "center";
-  justify-content: "flex-start";
-  gap: "8px";
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap:  8px;
 }
 
 .action-container-div {
