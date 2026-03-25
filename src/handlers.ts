@@ -45,8 +45,11 @@ export const handleGenerateLabelsButtonClick = () => {
 
 export const handlePluginInitialization = async () => {
     initializeAndFetchThesauri();
-    
+
     grist.ready({ requiredAccess: "full" });
+    grist.onRecord((record: GristRecord) => {
+        handleNewRecord(record);
+    });
     setGristTable(await grist.getTable());
     setColumns(await fetchTableColumns(gristTable))
     setConfigTable(await grist.docApi.fetchTable("CONFIG"))
@@ -55,10 +58,8 @@ export const handlePluginInitialization = async () => {
     generateLabelsButton.addEventListener("click", () => {
         handleGenerateLabelsButtonClick();
     });
-    
-    grist.onRecord((record: GristRecord) => {
-        handleNewRecord(record);
-    });
+
+
 
 }
 
