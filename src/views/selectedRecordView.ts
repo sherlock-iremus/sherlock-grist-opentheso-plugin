@@ -1,4 +1,4 @@
-import { configTableRecords, currentRecord, columns, thesauri, currentThesaurus } from "../state";
+import { configTableRecords, currentRecord, columns, thesauri, currentColumn } from "../state";
 import { existingIndexationsList, selectedRecordLabel } from "./pluginHTMLElements";
 import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen, handleSearchInputKeydown } from "../handlers";
 import { Thesaurus } from "../types/Thesaurus";
@@ -105,8 +105,7 @@ export const displayIndexationsByColumn = () => {
         const controlsCell = document.createElement("td");
         controlsCell.colSpan = 2;
 
-        const isColumnCurrentlyEdited =
-            !!currentThesaurus && currentThesaurus.idTheso === thesaurusId;
+        const isColumnCurrentlyEdited = indexationColumnToDisplay.id === currentColumn?.id
 
         if (isColumnCurrentlyEdited) {
             controlsCell.appendChild(getIndexationColumnSearchBar());
