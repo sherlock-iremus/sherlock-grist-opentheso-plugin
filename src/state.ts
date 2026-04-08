@@ -16,6 +16,11 @@ export let technicalTableId: string;
 export let configTableRecords: FormattedConfigurationTableRecord[];
 export let currentColumn: FormattedConfigurationTableRecord;
 export let searchQuery: string;
+export let currentTableIds: number[];
+
+export const setCurrentTableIds = (ids: number[]) => {
+    currentTableIds = ids;
+}
 
 export const setSearchQuery = (query: string) => {
     searchQuery = query;

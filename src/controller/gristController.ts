@@ -1,4 +1,4 @@
-import { columns, configTable, configTableRecords, setTechnicalTableId, technicalTableId } from "../state";
+import { columns, configTable, configTableRecords, setCurrentTableIds, setTechnicalTableId, technicalTableId } from "../state";
 import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { GristTablesColumns } from "../types/grist";
 import { GristTable } from "../types/GristTable";
@@ -34,6 +34,11 @@ export const fetchTableColumns = async (gristTable: GristTable): Promise<Formatt
         .map(idx => ({ id: gristTableColumns.colId[idx], label: gristTableColumns.label[idx] }))
 }
 
+export const fetchCurrentTableRecordIds = async () => {
+    const fetchedRecords = await grist.fetchSelectedTable({ format: "records" });
+    return fetchedRecords.id;
+}
+
 const fetchCurrentTableColumnsFromDocApi = async (gristTable: GristTable, gristTableColumns: GristTablesColumns) => {
     setTechnicalTableId(await gristTable.getTableId());
     console.log("technicalTableId : ", technicalTableId)
@@ -60,7 +65,7 @@ export const displayErrorsIfAnyConfigurationColumnMissing = () => {
     console.log("currentTableFormattedColumns : ", columns);
 
     const uriColumnMissingList = configTableRecords.filter(record => {
-         return !columns.some(col => col.id === record.uri);
+        return !columns.some(col => col.id === record.uri);
     });
 
     const labelColumnMissingList = configTableRecords.filter(record => {
