@@ -6,14 +6,15 @@
  * The handler is the only part of the code that has access to the controllers
  */
 
-import { displayErrorsIfAnyConfigurationColumnMissing, fetchCurrentTableRecordIds, fetchTableColumns, getConfigTableAsRecords } from "./controller/gristController";
+import { displayErrorsIfAnyConfigurationColumnMissing, fetchTableColumns, getConfigTableAsRecords } from "./controller/gristController";
 import { generateLabelsForCurrentRecord } from "./controller/polishDataController";
 import { addConceptToColumn, removeConceptFromColumn, renderSelectedRecord } from "./controller/recordController";
 import { initializeAndFetchThesauri, renderSearchResults, renderSelectedIndexationType, searchConcepts } from "./controller/thesaurusController";
-import { currentRecord, gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentColumn, setCurrentRecord, setCurrentTableIds, setcurrentThesaurus, setGristTable, setSearchQuery, setThesauri } from "./state";
+import { currentRecord, gristTable, setColumns, setConceptList, setConfigTable, setConfigTableRecords, setCurrentColumn, setCurrentRecord, setcurrentThesaurus, setGristTable, setSearchQuery, setThesauri } from "./state";
 import { GristRecord } from "./types/GristRecord";
 import { OpenthesoConcept } from "./types/OpenthesoConcept";
 import { Thesaurus } from "./types/Thesaurus";
+import { CONFIG_TABLE_ID } from "./utils/consts";
 import { generateLabelsButton } from "./views/pluginHTMLElements";
 
 export const handleNewRecord = (record: GristRecord) => {
@@ -49,21 +50,15 @@ export const handlePluginInitialization = async () => {
     grist.ready({ requiredAccess: "full" });
     setGristTable(await grist.getTable());
     setColumns(await fetchTableColumns(gristTable))
-    setConfigTable(await grist.docApi.fetchTable("CONFIG"))
+    setConfigTable(await grist.docApi.fetchTable(CONFIG_TABLE_ID))
     setConfigTableRecords(getConfigTableAsRecords());
     displayErrorsIfAnyConfigurationColumnMissing();
-    setCurrentTableIds(await fetchCurrentTableRecordIds());
     generateLabelsButton.addEventListener("click", () => {
         handleGenerateLabelsButtonClick();
     });
 
     grist.onRecord((record: GristRecord) => {
         handleNewRecord(record);
-    });
-
-    // onRecords is triggered every time a record changes in the current table.
-    grist.onRecords(async () => {
-        setCurrentTableIds(await fetchCurrentTableRecordIds());
     });
 }
 

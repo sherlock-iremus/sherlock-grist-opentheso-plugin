@@ -1,4 +1,4 @@
-import { configTableRecords, currentRecord, columns, thesauri, currentColumn, currentTableIds } from "../state";
+import { configTableRecords, currentRecord, columns, thesauri, currentColumn } from "../state";
 import { existingIndexationsList, selectedRecordLabel } from "./pluginHTMLElements";
 import { handleDeleteIndexationButtonClick, handleIndexationTypeChosen, handleSearchInputKeydown } from "../handlers";
 import { Thesaurus } from "../types/Thesaurus";
@@ -8,11 +8,6 @@ import { getAddButtonElement, trashcanIconClass } from "./components/icons";
 export const displayNoRecordSelected = () => {
     selectedRecordLabel.textContent = "Pas de ligne sélectionnée";
     existingIndexationsList.innerHTML = "";
-}
-
-export const displaySelectedRecordLabel = () => {
-    const rowNumber = currentTableIds.indexOf(currentRecord.id) + 1;
-    selectedRecordLabel.textContent = rowNumber > 0 ? "n°" + rowNumber : "aucune";
 }
 
 export const displayNoExistingIndexations = () => {

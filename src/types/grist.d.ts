@@ -1,7 +1,6 @@
 import { GristRecord } from "./GristRecord";
 
 export {};
-
 declare global {
   /**
    * Objet global injecté par Grist dans index.html.
@@ -20,7 +19,7 @@ declare global {
           ? GristTables
           : T extends "_grist_Tables_column"
             ? GristTablesColumns
-            : T extends "CONFIG"
+            : T extends "OPENTHESO_INDEXING_PLUGIN_CONFIG"
               ? ConfigurationTableData
               : any[]
       >;

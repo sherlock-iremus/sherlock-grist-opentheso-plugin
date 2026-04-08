@@ -1,6 +1,7 @@
 import { upsertGristRecordApiCall } from "../api/grist";
 import { currentRecord } from "../state";
-import { displayIndexationsByColumn, displayNoRecordSelected, displaySelectedRecordLabel } from "../views/selectedRecordView";
+import { CONCEPT_SEPARATOR } from "../utils/consts";
+import { displayIndexationsByColumn, displayNoRecordSelected } from "../views/selectedRecordView";
 import { displaySearchResults } from "../views/thesaurusSearchConceptsView";
 
 export const renderSelectedRecord = () => {
@@ -9,7 +10,6 @@ export const renderSelectedRecord = () => {
         return;
     }
 
-    displaySelectedRecordLabel();
     displayIndexationsByColumn();
     displaySearchResults();
 }
@@ -17,13 +17,13 @@ export const renderSelectedRecord = () => {
 
 export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: string, labelColumnId: string) => {
 
-    const urisArray = currentRecord[uriColumnId].split(';');
+    const urisArray = currentRecord[uriColumnId].split(CONCEPT_SEPARATOR);
     urisArray.splice(conceptIndex, 1);
-    const newUrisString = urisArray.join(';');
+    const newUrisString = urisArray.join(CONCEPT_SEPARATOR);
 
-    const labelsArray = currentRecord[labelColumnId].split(';');
+    const labelsArray = currentRecord[labelColumnId].split(CONCEPT_SEPARATOR);
     labelsArray.splice(conceptIndex, 1);
-    const newLabelsString = labelsArray.join(';');
+    const newLabelsString = labelsArray.join(CONCEPT_SEPARATOR);
 
     upsertGristRecordApiCall({
         [uriColumnId]: newUrisString,
@@ -33,12 +33,12 @@ export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: strin
 
 export const addConceptToColumn = (conceptId: string, label: string, uriColumnId: string, labelColumnId: string) => {
     upsertGristRecordApiCall({
-        [uriColumnId]: (currentRecord[uriColumnId] ? currentRecord[uriColumnId].split(';') : [])
+        [uriColumnId]: (currentRecord[uriColumnId] ? currentRecord[uriColumnId].split(CONCEPT_SEPARATOR) : [])
             .concat([conceptId])
-            .join(';'),
-        [labelColumnId]: (currentRecord[labelColumnId] ? currentRecord[labelColumnId].split(';') : [])
+            .join(CONCEPT_SEPARATOR),
+        [labelColumnId]: (currentRecord[labelColumnId] ? currentRecord[labelColumnId].split(CONCEPT_SEPARATOR) : [])
             .concat([label])
-            .join(';')
+            .join(CONCEPT_SEPARATOR)
     }, { id: currentRecord.id })
 }
 
