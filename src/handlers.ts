@@ -60,8 +60,11 @@ export const handlePluginInitialization = async () => {
         handleNewRecord(record);
     });
 
-    console.log(gristTable)
-
+    grist.onRecords(() => {
+        grist.fetchSelectedTable({format: "records"}).then((fetchedRecords: any) => {  
+            console.log(fetchedRecords);
+        });
+    });
 }
 
 export const handleIndexationTypeChosen = (indexationColumnToDisplay: FormattedConfigurationTableRecord, thesaurus: Thesaurus) => {
