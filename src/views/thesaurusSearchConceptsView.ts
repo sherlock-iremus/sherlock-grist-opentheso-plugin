@@ -16,7 +16,7 @@ export const displayError = (error: string) => {
 }
 
 export const displaySearchResults = () => {
-    if (searchQuery.trim() === "") {
+    if (!searchQuery || searchQuery.trim() === "") {
         searchResults.innerHTML = "Saisir votre recherche."; 
         return;
     } else if (conceptList.length === 0) {
