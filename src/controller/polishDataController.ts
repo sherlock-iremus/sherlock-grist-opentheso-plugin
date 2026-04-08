@@ -1,5 +1,6 @@
 import { getConceptLabels } from "../api/opentheso";
 import { configTableRecords, currentRecord } from "../state";
+import { CONCEPT_SEPARATOR } from "../utils/consts";
 import { updateRecordColumn } from "./recordController";
 
 export const generateLabelsForCurrentRecord = async () => {
@@ -13,7 +14,7 @@ export const generateLabelsForCurrentRecord = async () => {
             else {
                 console.log("Current state: ", currentRecord[configRecord.label]);
                 const newLabels = [];
-                for (const conceptId of currentRecord[configRecord.uri].split(";").filter((uri: string) => uri.trim())) {
+                for (const conceptId of currentRecord[configRecord.uri].split(CONCEPT_SEPARATOR).filter((uri: string) => uri.trim())) {
                     console.log("Fetching concept id label: ", conceptId);
                     const idThesaurus = (new URL(conceptId)).searchParams.get("idt");
                     const idConcept = (new URL(conceptId)).searchParams.get("idc");
@@ -26,7 +27,7 @@ export const generateLabelsForCurrentRecord = async () => {
                         console.warn("Label not found for concept id: ", conceptId);
                     }
                 }
-                updatedRecord[configRecord.label] = newLabels.join(";");
+                updatedRecord[configRecord.label] = newLabels.join(CONCEPT_SEPARATOR);
                 console.log("Final labels for column ", configRecord.label, ": ", newLabels);
             }
         }
