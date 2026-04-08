@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Sherlock X Grist X Opentheso</title>
     <link rel="stylesheet" href="./fontawesome/css/all.min.css">
-  <script type="module" crossorigin src="/sherlock-grist-opentheso-plugin/assets/index-Bo__xt_f.js"></script>
+  <script type="module" crossorigin src="/sherlock-grist-opentheso-plugin/assets/index-BRIw2tYP.js"></script>
   <link rel="stylesheet" crossorigin href="/sherlock-grist-opentheso-plugin/assets/index-CDxbcysp.css">
 </head>
 
@@ -16,22 +16,19 @@
                 <!-- Colonne gauche : Record  et indexations existantes -->
                 <div id="existingIndexationsCol"
                     style="flex: 1; overflow-y: auto; border-right: 1px solid #e0e0e0; padding-right: 20px;">
-                    <span style="padding: 5px" class="technical-text">
-                        <span style="font-weight:bold;">Ligne sélectionnée: </span>
-                        <span id="selectedRecordLabel"></span>
-                        <span id="generateLabelsButton">🏷️</span>
-                    </span>
                     <!-- La liste des indexations existantes sera injectée ici -->
                     <div id="existingIndexationsList" class="indexation-list"></div>
                 </div>
                 <!-- Colonne droite : Thésaurus et résultats de recherche -->
                 <div id="thesaurusCol" style="flex: 0.7; overflow-y: auto;">
-                    <div id="searchResults" style="margin-top: 16px;"></div>
+                    <span title="Récupérer et mettre à jour les labels Grist à partir des URI des concepts sur Opentheso" id="generateLabelsButton">🏷️</span>
+                    <div id="searchResults">zdez</div>
                 </div>
             </div>
         </div>
         <div id="configWarningDiv" style="display:none;">
-            <h5 style="font-weight:bold;">⚠️ Problème de configuration du plugin. Veuillez créer les colonnes suivantes</h5>
+            <h5 style="font-weight:bold;">⚠️ Problème de configuration du plugin. Veuillez créer les colonnes suivantes
+            </h5>
             <ul id="configWarningList">
             </ul>
         </div>
