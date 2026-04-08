@@ -58,8 +58,13 @@ export const handlePluginInitialization = async () => {
 
     grist.onRecord((record: GristRecord) => {
         handleNewRecord(record);
-    });
 
+        // This is test
+        grist.onRecords(function (records) {
+            const index = records.findIndex(r => r.id === record.id);
+            console.log("Visible row:", index + 1);
+        });
+    });
 
 }
 

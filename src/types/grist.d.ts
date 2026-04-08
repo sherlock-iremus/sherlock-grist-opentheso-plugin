@@ -8,6 +8,7 @@ declare global {
    */
   const grist: {
     onRecord: (callback: (record: GristRecord) => void) => void;
+    onRecords: (callback: (records: GristRecord[]) => void) => void;
     ready: (permissions: any) => void;
     getTable: () => Promise<GristTable>;
     fetchSelectedTable: (options: { format: "columns" | "records" }) => Promise<SelectedTableColumns>;
