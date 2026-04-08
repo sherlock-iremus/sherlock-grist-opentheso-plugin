@@ -58,23 +58,17 @@ export const displayIndexationsByColumn = () => {
         const headerDiv = document.createElement("div");
         headerDiv.className = "indexation-type-line";
 
-        const labelSpan = document.createElement("span");
-        labelSpan.textContent =
-            indexationTypeLabel +
-            " (" +
-            (thesaurusName || "Thésaurus non trouvé") +
-            ")";
+        const thesaurusLabelLink = document.createElement("a");
+        thesaurusLabelLink.href = indexationColumnToDisplay.thesaurus;
+        thesaurusLabelLink.target = "_blank";
+        thesaurusLabelLink.rel = "noopener";
+        thesaurusLabelLink.style.color = "inherit";
+        thesaurusLabelLink.style.textDecoration = "none";
+        thesaurusLabelLink.style.cursor = "pointer";
+        thesaurusLabelLink.innerHTML =
+            `${indexationTypeLabel} (${thesaurusName || "Thésaurus non trouvé"}) <img src="./up-right-from-square.svg" style="width:14px;height:14px;margin-left:8px;vertical-align:middle;" />`;
 
-        const link = document.createElement("a");
-        link.href = indexationColumnToDisplay.thesaurus;
-        link.target = "_blank";
-        link.rel = "noopener";
-        link.style.marginLeft = "8px";
-        link.innerHTML =
-            `<img src="./up-right-from-square.svg" style="width:14px;height:14px;" />`;
-
-        headerDiv.appendChild(labelSpan);
-        headerDiv.appendChild(link);
+        headerDiv.appendChild(thesaurusLabelLink);
 
         headerCell.appendChild(headerDiv);
         headerRow.appendChild(headerCell);
@@ -182,19 +176,24 @@ const getConceptRow = (
 
     const deleteTd = document.createElement("td");
 
+
     const deleteBtn = document.createElement("button");
     deleteBtn.title = "Supprimer";
     deleteBtn.className = "indexation-concept-delete";
-
     deleteBtn.innerHTML = `<i class="${trashcanIconClass}"></i>`;
 
-    deleteBtn.onclick = () =>
-        handleDeleteIndexationButtonClick(
-            uri,
-            index,
-            indexationColumnToDisplay.uri,
-            indexationColumnToDisplay.label
-        );
+    // Add confirmation popup before deletion
+    deleteBtn.onclick = () => {
+        const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cette indexation ?");
+        if (confirmDelete) {
+            handleDeleteIndexationButtonClick(
+                uri,
+                index,
+                indexationColumnToDisplay.uri,
+                indexationColumnToDisplay.label
+            );
+        }
+    };
 
     deleteTd.appendChild(deleteBtn);
 
