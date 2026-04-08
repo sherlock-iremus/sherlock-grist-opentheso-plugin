@@ -60,11 +60,7 @@ export const handlePluginInitialization = async () => {
         handleNewRecord(record);
     });
 
-    // This is test
-    grist.onRecords(function (records) {
-        console.log("Visible records:", records.length);
-        console.log(records);
-    });
+    console.log(gristTable)
 
 }
 
