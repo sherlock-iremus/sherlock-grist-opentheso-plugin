@@ -182,9 +182,8 @@ const getConceptRow = (
     deleteBtn.className = "indexation-concept-delete";
     deleteBtn.innerHTML = `<i class="${trashcanIconClass}"></i>`;
 
-    // Add confirmation popup before deletion
     deleteBtn.onclick = () => {
-        const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cette indexation ?");
+        const confirmDelete = window.confirm(`Voulez-vous désindexer le concept ${label} ?`);
         if (confirmDelete) {
             handleDeleteIndexationButtonClick(
                 uri,
