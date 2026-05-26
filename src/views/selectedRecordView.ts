@@ -21,15 +21,15 @@ export const displayIndexationsByColumn = () => {
 
     configTableRecords.forEach(indexationColumnToDisplay => {
 
-        const uriArray = currentRecord[indexationColumnToDisplay.uri]?.split(';').filter((uri: string) => uri.trim()) || [];
-        const labelArray = currentRecord[indexationColumnToDisplay.label]?.split(';').filter((label: string) => label.trim()) || [];
+        const uriArray = currentRecord[indexationColumnToDisplay.Descripteur_IDCN]?.split(';').filter((uri: string) => uri.trim()) || [];
+        const labelArray = currentRecord[indexationColumnToDisplay.Descripteur_PLCN]?.split(';').filter((label: string) => label.trim()) || [];
 
         const indexationTypeLabel =
-            columns.find(col => col.id === indexationColumnToDisplay.label)?.label
-            || indexationColumnToDisplay.uri;
+            columns.find(col => col.id === indexationColumnToDisplay.Descripteur_PLCN)?.label
+            || indexationColumnToDisplay.Descripteur_IDCN;
 
         const thesaurusId =
-            (new URL(indexationColumnToDisplay.thesaurus)).searchParams.get("idt");
+            (new URL(indexationColumnToDisplay.Referentiel_OTCSURI)).searchParams.get("idt");
 
         const thesaurus = thesauri.find(t => t.idTheso === thesaurusId);
 
@@ -55,7 +55,7 @@ export const displayIndexationsByColumn = () => {
         headerDiv.className = "indexation-type-line";
 
         const thesaurusLabelLink = document.createElement("a");
-        thesaurusLabelLink.href = indexationColumnToDisplay.thesaurus;
+        thesaurusLabelLink.href = indexationColumnToDisplay.Referentiel_OTCSURI;
         thesaurusLabelLink.target = "_blank";
         thesaurusLabelLink.rel = "noopener";
         thesaurusLabelLink.style.color = "inherit";
@@ -184,8 +184,8 @@ const getConceptRow = (
             handleDeleteIndexationButtonClick(
                 uri,
                 index,
-                indexationColumnToDisplay.uri,
-                indexationColumnToDisplay.label
+                indexationColumnToDisplay.Descripteur_IDCN,
+                indexationColumnToDisplay.Descripteur_PLCN
             );
         }
     };
