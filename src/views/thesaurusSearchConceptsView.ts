@@ -60,7 +60,7 @@ const getLineForConcept = (concept: OpenthesoConcept) => {
         addBtn.title = "Ajouter ce concept";
         addBtn.onclick = (ev) => {
             ev.stopPropagation();
-            handleAddConceptClick(conceptId, label, currentColumn.uri, currentColumn.label);
+            handleAddConceptClick(conceptId, label, currentColumn.Descripteur_IDCN, currentColumn.Descripteur_PLCN);
         };
         actionContainer.appendChild(addBtn);
     }
@@ -99,6 +99,6 @@ const isConceptIndexed = (conceptId: string): boolean => {
         return false;
     }
 
-    const uriArray = currentRecord[currentColumn.uri]?.split(';').filter((uri: string) => uri.trim()) || [];
+    const uriArray = currentRecord[currentColumn.Descripteur_IDCN]?.split(';').filter((uri: string) => uri.trim()) || [];
     return uriArray.some((uri: string) => uri.trim() === conceptId);
 }
