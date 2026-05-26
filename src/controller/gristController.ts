@@ -84,7 +84,7 @@ export const displayErrorsIfAnyConfigurationColumnMissing = () => {
 }
 
 export const getConfigTableAsRecords = (): FormattedConfigurationTableRecord[] => {
-    const indexes: number[] = indexesOf(technicalTableId, configTable.table);
+    const indexes: number[] = indexesOf(technicalTableId, configTable.Ressources_TID);
     return indexes.map(index => {
         return {
             id: configTable.id[index],
