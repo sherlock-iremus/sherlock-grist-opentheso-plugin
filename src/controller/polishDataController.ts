@@ -8,13 +8,13 @@ export const generateLabelsForCurrentRecord = async () => {
         const updatedRecord: Partial<typeof currentRecord> = { };
         const id = currentRecord.id;
         for (const configRecord of configTableRecords) {
-            console.log("Processing column labels: ", configRecord.label);
-            if (!(configRecord.label in currentRecord))
-                console.warn('Column does not exist: ', configRecord.label)
+            console.log("Processing column labels: ", configRecord.Descripteur_PLCN);
+            if (!(configRecord.Descripteur_PLCN in currentRecord))
+                console.warn('Column does not exist: ', configRecord.Descripteur_PLCN)
             else {
-                console.log("Current state: ", currentRecord[configRecord.label]);
+                console.log("Current state: ", currentRecord[configRecord.Descripteur_PLCN]);
                 const newLabels = [];
-                for (const conceptId of currentRecord[configRecord.uri].split(CONCEPT_SEPARATOR).filter((uri: string) => uri.trim())) {
+                for (const conceptId of currentRecord[configRecord.Descripteur_IDCN].split(CONCEPT_SEPARATOR).filter((uri: string) => uri.trim())) {
                     console.log("Fetching concept id label: ", conceptId);
                     const idThesaurus = (new URL(conceptId)).searchParams.get("idt");
                     const idConcept = (new URL(conceptId)).searchParams.get("idc");
@@ -27,8 +27,8 @@ export const generateLabelsForCurrentRecord = async () => {
                         console.warn("Label not found for concept id: ", conceptId);
                     }
                 }
-                updatedRecord[configRecord.label] = newLabels.join(CONCEPT_SEPARATOR);
-                console.log("Final labels for column ", configRecord.label, ": ", newLabels);
+                updatedRecord[configRecord.Descripteur_PLCN] = newLabels.join(CONCEPT_SEPARATOR);
+                console.log("Final labels for column ", configRecord.Descripteur_PLCN, ": ", newLabels);
             }
         }
         updateRecordColumn(updatedRecord, id);
