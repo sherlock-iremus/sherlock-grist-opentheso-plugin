@@ -11,12 +11,12 @@ export const displayMalformedConfigurationTable = () => {
 export const displayColumnsMissing = (labelMissing: FormattedConfigurationTableRecord[], uriMissing: FormattedConfigurationTableRecord[]) => {
     for (const col of uriMissing) {
         const li = document.createElement("li");
-        li.textContent = `${col.uri}`
+        li.textContent = `${col.Descripteur_IDCN}`
         configWarningList.appendChild(li);
     };
     for (const col of labelMissing) {
         const li = document.createElement("li");
-        li.textContent = `${col.label}`
+        li.textContent = `${col.Descripteur_PLCN}`
         configWarningList.appendChild(li);
     };
     configWarningDiv.style.display = "block";

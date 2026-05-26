@@ -19,7 +19,7 @@ declare global {
           ? GristTables
           : T extends "_grist_Tables_column"
             ? GristTablesColumns
-            : T extends "OPENTHESO_INDEXING_PLUGIN_CONFIG"
+            : T extends "Indexes"
               ? ConfigurationTableData
               : any[]
       >;

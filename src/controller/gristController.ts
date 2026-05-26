@@ -1,4 +1,4 @@
-import { columns, configTable, configTableRecords, setCurrentTableIds, setTechnicalTableId, technicalTableId } from "../state";
+import { columns, configTable, configTableRecords, setTechnicalTableId, technicalTableId } from "../state";
 import { FormattedGristColumn } from "../types/FormattedGristColumn";
 import { GristTablesColumns } from "../types/grist";
 import { GristTable } from "../types/GristTable";
@@ -65,11 +65,11 @@ export const displayErrorsIfAnyConfigurationColumnMissing = () => {
     console.log("currentTableFormattedColumns : ", columns);
 
     const uriColumnMissingList = configTableRecords.filter(record => {
-        return !columns.some(col => col.id === record.uri);
+        return !columns.some(col => col.id === record.Descripteur_IDCN);
     });
 
     const labelColumnMissingList = configTableRecords.filter(record => {
-        return !columns.some(col => col.id === record.label);
+        return !columns.some(col => col.id === record.Descripteur_PLCN);
     });
 
     if (configTableRecords.some(record => Object.values(record).some(value => value === null || value === undefined || value === ""))) {
@@ -89,10 +89,10 @@ export const getConfigTableAsRecords = (): FormattedConfigurationTableRecord[] =
         return {
             id: configTable.id[index],
             manualSort: configTable.manualSort[index],
-            table: configTable.table[index],
-            uri: configTable.uri[index],
-            thesaurus: configTable.thesaurus[index],
-            label: configTable.label[index]
+            Ressources_TID: configTable.Ressources_TID[index],
+            Descripteur_IDCN: configTable.Descripteur_IDCN[index],
+            Referentiel_OTCSURI: configTable.Referentiel_OTCSURI[index],
+            Descripteur_PLCN: configTable.Descripteur_PLCN[index]
         }
     });
 }
