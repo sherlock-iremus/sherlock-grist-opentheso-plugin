@@ -14,6 +14,10 @@ export const displayNoExistingIndexations = () => {
     existingIndexationsList.innerHTML = "<div style='font-size:0.95em;'>Aucune indexation existante.</div>";
 }
 
+
+// Track if search input focus has already been requested for this render
+let searchInputFocusRequested = false;
+
 export const displayIndexationsByColumn = () => {
 
     const table = document.createElement("table");
@@ -118,6 +122,7 @@ const getAddConceptButton = (thesaurus: Thesaurus, indexationColumnToDisplay: Fo
     addBtn.title = "Sélectionner ce thésaurus";
     addBtn.onclick = (ev) => {
         ev.stopPropagation();
+        searchInputFocusRequested = true;
         handleIndexationTypeChosen(indexationColumnToDisplay, thesaurus);
     };
     return addBtn;
@@ -130,7 +135,10 @@ const getIndexationColumnSearchBar = () => {
     searchInput.className = "indexation-search";
 
     searchInput.onkeydown = (e: KeyboardEvent) => handleSearchInputKeydown(e, searchInput.value);
-    setTimeout(() => searchInput.focus(), 0);
+    if (searchInputFocusRequested) {
+        setTimeout(() => searchInput.focus(), 0);
+        searchInputFocusRequested = false;
+    }
 
     return searchInput;
 }
