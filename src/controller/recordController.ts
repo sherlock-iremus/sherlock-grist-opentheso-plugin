@@ -17,11 +17,11 @@ export const renderSelectedRecord = () => {
 
 export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: string, labelColumnId: string) => {
 
-    const urisArray = currentRecord[uriColumnId].split(CONCEPT_SEPARATOR.trim()).map((uri: string) => uri.trim());
+    const urisArray = currentRecord[uriColumnId].split(CONCEPT_SEPARATOR.trim()).map((uri: string) => uri.trim()).filter((uri: string) => uri.length > 0);
     urisArray.splice(conceptIndex, 1);
     const newUrisString = urisArray.join(CONCEPT_SEPARATOR);
 
-    const labelsArray = currentRecord[labelColumnId].split(CONCEPT_SEPARATOR.trim()).map((label: string) => label.trim());
+    const labelsArray = currentRecord[labelColumnId].split(CONCEPT_SEPARATOR.trim()).map((label: string) => label.trim()).filter((label: string) => label.length > 0);
     labelsArray.splice(conceptIndex, 1);
     const newLabelsString = labelsArray.join(CONCEPT_SEPARATOR);
 
@@ -33,10 +33,10 @@ export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: strin
 
 export const addConceptToColumn = (conceptId: string, label: string, uriColumnId: string, labelColumnId: string) => {
     upsertGristRecordApiCall({
-        [uriColumnId]: (currentRecord[uriColumnId] ? currentRecord[uriColumnId].split(CONCEPT_SEPARATOR.trim()).map((uri: string) => uri.trim()) : [])
+        [uriColumnId]: (currentRecord[uriColumnId] ? currentRecord[uriColumnId].split(CONCEPT_SEPARATOR.trim()).map((uri: string) => uri.trim()).filter((uri: string) => uri.length > 0) : [])
             .concat([conceptId])
             .join(CONCEPT_SEPARATOR),
-        [labelColumnId]: (currentRecord[labelColumnId] ? currentRecord[labelColumnId].split(CONCEPT_SEPARATOR.trim()).map((label: string) => label.trim()) : [])
+        [labelColumnId]: (currentRecord[labelColumnId] ? currentRecord[labelColumnId].split(CONCEPT_SEPARATOR.trim()).map((label: string) => label.trim()).filter((label: string) => label.length > 0) : [])
             .concat([label])
             .join(CONCEPT_SEPARATOR)
     }, { id: currentRecord.id })
