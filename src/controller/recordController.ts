@@ -17,11 +17,11 @@ export const renderSelectedRecord = () => {
 
 export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: string, labelColumnId: string) => {
 
-    const urisArray = currentRecord[uriColumnId].split(CONCEPT_SEPARATOR);
+    const urisArray = currentRecord[uriColumnId].split(CONCEPT_SEPARATOR.trim()).map((uri: string) => uri.trim());
     urisArray.splice(conceptIndex, 1);
     const newUrisString = urisArray.join(CONCEPT_SEPARATOR);
 
-    const labelsArray = currentRecord[labelColumnId].split(CONCEPT_SEPARATOR);
+    const labelsArray = currentRecord[labelColumnId].split(CONCEPT_SEPARATOR.trim()).map((label: string) => label.trim());
     labelsArray.splice(conceptIndex, 1);
     const newLabelsString = labelsArray.join(CONCEPT_SEPARATOR);
 
@@ -33,10 +33,10 @@ export const removeConceptFromColumn = (conceptIndex: number, uriColumnId: strin
 
 export const addConceptToColumn = (conceptId: string, label: string, uriColumnId: string, labelColumnId: string) => {
     upsertGristRecordApiCall({
-        [uriColumnId]: (currentRecord[uriColumnId] ? currentRecord[uriColumnId].split(CONCEPT_SEPARATOR) : [])
+        [uriColumnId]: (currentRecord[uriColumnId] ? currentRecord[uriColumnId].split(CONCEPT_SEPARATOR.trim()).map((uri: string) => uri.trim()) : [])
             .concat([conceptId])
             .join(CONCEPT_SEPARATOR),
-        [labelColumnId]: (currentRecord[labelColumnId] ? currentRecord[labelColumnId].split(CONCEPT_SEPARATOR) : [])
+        [labelColumnId]: (currentRecord[labelColumnId] ? currentRecord[labelColumnId].split(CONCEPT_SEPARATOR.trim()).map((label: string) => label.trim()) : [])
             .concat([label])
             .join(CONCEPT_SEPARATOR)
     }, { id: currentRecord.id })
