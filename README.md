@@ -1,5 +1,10 @@
 ![](https://repository-images.githubusercontent.com/1109242115/10bfd927-7bec-4821-97dd-2ea5c6202405)
 
+# Usage (FR)
+
+![](https://raw.githubusercontent.com/sherlock-iremus/sherlock-grist-opentheso-plugin/main/doc/tuto.gif)
+
+
 # Installation (FR)
 
 Le tutoriel suivant explique comment créer une table d'indexation avec des concepts opentheso grâce au plugin. Si vous avez déjà une table d'indexation et souhaitez uniquement intégrer le plugin, commencer au point 3.
