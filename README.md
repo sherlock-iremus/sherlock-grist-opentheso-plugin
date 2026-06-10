@@ -61,13 +61,13 @@ Le plugin, est ensuite prêt à être ajouée à votre page
 
 ## FAQ
 
-"J'ai créé mes colonnes d'indexationo mais elles le plugin affiche qu'elles sont manquantes"
+"J'ai créé mes colonnes d'indexation mais le plugin affiche qu'elles sont manquantes"
 
 ⚠️ Chaque colonne ajoutée **après** installation du plugin se sera pas visible par défaut par le plugin. Pour ce faire, cliquez sur la vue du plugin, dans le panneau de création onglet "Personnalisée" -> "Colonnes cachées".
 
 ---
 
-"Cela fait trop de colonnes à afficher"
+"Trop de colonnes affichées sur ma table"
 
 ⚠️ Vous pouvez cacher les colonnes de votre table d'indexation (comme les URI par exemple) en cliquant dessus, onglet "Table" -> "Colonnes visibles". Cela n'affectera pas le bon fonctionnement du plugin.
 

@@ -19,7 +19,7 @@ Global variables that should only be mutated in `src/handlers.ts`.
 
 All DOM edition should be inside this folder.
 
-### `src/controllers/`
+### `src/controller/`
 
 Controllers are called by handlers and dispatch orders to views and api
 
@@ -30,7 +30,7 @@ We followed next rules in this plugin development, for data integrity :
 - Every change of state is in `src/handlers.ts` file.
 - DOM cannot be edited by something else than `src/views/` files.
 - `src/views/` cannot be called by anything else than controllers
-- `src/controllers/` cannot be called by anything else than handlers
+- `src/controller/` cannot be called by anything else than handlers
 
 
 # Plugin edition
