@@ -4,69 +4,76 @@
 
 ![](https://github.com/sherlock-iremus/sherlock-grist-opentheso-plugin/blob/main/doc/tuto.gif?raw=true)
 
+La vidéo montre les différents cas d'utilisation du plugin : 
+ - Affichage des concepts indexés pour la ligne courante
+ - Recherche et ajout d'un concept
+ - Suppression d'une indexation de concept
 
 # Installation (FR)
 
-Le tutoriel suivant explique comment créer une table d'indexation avec des concepts opentheso grâce au plugin. Si vous avez déjà une table d'indexation et souhaitez uniquement intégrer le plugin, commencer au point 3.
+## Table de configuration : indexes
+Le tutoriel suivant explique comment intégrer le plugin, sur une table existante. 
+Pour commencer, il faudra créer une table `indexes` telle que.
+|               $Ressources_TID               |    $Referentiel_OTCSURI    |  $Descripteur_IDCN  |   $Descripteur_PLCN  |
+| :------------------------------------: | :-------------: | :----------: |   :----------:  |
 
-1. Se connecter sur grist -> "Nouveau" ->  "Ajouter table vide".
-2. Cliquer sur la première colonne, ouvrir le panneau de création. "Type de colonne : Référence", choisir votre table indexée
-3. "Nouveau" ->  "Ajouter une vue à la page" -> "Personnalisés" -> Sélectionner votre table d'indexation -> Ne pas oublier de sélectionner une option dans le menu déroulant "Select by".
-4. Menu "Choisir un widget personnalisé", sélectionner l'option "Ajouter votre propre widget URL personnalisée", et remplir avec l'URL https://sherlock-iremus.github.io/sherlock-grist-opentheso-plugin/
-5. "Le widget a besoin de full access à ce document."  -> "Accepter"
-6. Créer une colonne `CONFIG_OPENTHESO`
-7. Renommer et donner le nom "UUID" à la colonne qui contient votre record indexé.
-8. Pour chacun des types d'indexation, créer deux colonnes : `<type_indexation>` et `<type_indexation_prefLabel>`. Exemple `technique_utilisee` et `technique_utilisee_prefLabel`, qui recevront des concepts d'un thesaurus des techniques de gravure. 
+Ces colonnes représentent, dans l'ordre : 
+- L'identifiant GRIST de table sur lequel le plugin va opérer
+- L'URI du thésaurus sur lequel porte l'indexation 
+- L'identifiant GRIST de la colonne qui contiendra les URI des concepts opentheso
+- L'identifiant GRIST de la colonne qui contiendra les labels des concepts opentheso 
+
+## Mise en exemple
+
+Prenons l'exemple d'une collection d'images (identifiant GRIST de table "ICONOGRAPHIES") telle que :
+
+
+|               ID Image               |    Nom image    |
+| :------------------------------------: | :-------------: | 
+| `c1bfbf91-ffeb-453f-9383-11a6d4d28a9e` | `Un lapin dans un champ` |
+| `683827a5-56a5-4245-be59-070bf664d802` | `Le mariage du roy` |
+
+
+On veut indexer des images avec des concepts du thésaurus [iconographie musicale](https://opentheso.huma-num.fr/?idt=iconographie-musicale).
+
+Il faudra pour cela créer deux colonnes : 
+- "Concept associé label" pour les labels des concepts indexés
+- "Concept associé URI" pour les URIs des concepts indexés
+
+Le choix des identifiants de colonne est au choix de l'utilisateur, on choisira ici `CAL` et `CAU`.
+
+|               ID Image               |    Nom image    |  Concept associé label    | Concept associé URI |
+| :------------------------------------: | :-------------: | :-------------: | :-------------:
+| `c1bfbf91-ffeb-453f-9383-11a6d4d28a9e` | `Un lapin dans un champ` |
+| `683827a5-56a5-4245-be59-070bf664d802` | `Le mariage du roy` |
+
+
+En parallèle, il faudra donc remplir la table `indexes` comme suit : 
+
+|               $Ressources_TID               |    $Referentiel_OTCSURI    |  $Descripteur_IDCN  |   $Descripteur_PLCN  |
+| :------------------------------------: | :-------------: | :----------: |   :----------:  |
+| `ICOONOGRAPHIES` | `https://opentheso.huma-num.fr/?idt=iconographie-musicale` | `CAL` | `CAU` |
+
+Le plugin, est ensuite prêt à être ajouée à votre page
+
+1. "Nouveau" ->  "Ajouter une vue à la page" -> "Personnalisés" -> Sélectionner votre table d'indexation -> Ne pas oublier de sélectionner une option dans le menu déroulant "Select by".
+2. Menu "Choisir un widget personnalisé", sélectionner l'option "Ajouter votre propre widget URL personnalisée", et remplir avec l'URL https://sherlock-iremus.github.io/sherlock-grist-opentheso-plugin/
+
+## FAQ
+
+"J'ai créé mes colonnes d'indexationo mais elles le plugin affiche qu'elles sont manquantes"
 
 ⚠️ Chaque colonne ajoutée **après** installation du plugin se sera pas visible par défaut par le plugin. Pour ce faire, cliquez sur la vue du plugin, dans le panneau de création onglet "Personnalisée" -> "Colonnes cachées".
 
-⚠️ Pour retirer les warnings sur vos colonnes déjà existantes, qui ne sont pas des colonnes d'indexations, cliquez sur la vue du plugin, dans le panneau de création onglet "Personnalisée" -> "Colonnes visibles" -> Retirer les colonnes en question.
+---
 
-⚠️ Vous pouvez cacher les colonnes de votre table d'indexation (comme `CONFIG_OPENTHESO` par exemple) en cliquant dessus, onglet "Table" -> "Colonnes visibles". Cela n'affectera pas le bon fonctionnement du plugin.
+"Cela fait trop de colonnes à afficher"
 
-
-# Technical architecture
-
-Main file is `src/handlers.ts`.
-
-### `src/handlers.ts`
-
-It contains handlers for :
-
-- User DOM interactions
-- Grist plugin events
-- Opentheso API feedback
-
-### `src/state.ts`
-
-Global variables that should only be mutated in `src/handlers.ts`.
-
-### `src/views/`
-
-All DOM edition should be inside this folder.
-
-### `src/controllers/`
-
-Controllers are called by handlers and dispatch orders to views and api
-
-### Good practices
-
-We followed next rules in this plugin development, for data integrity :
- 
-- Every change of state is in `src/handlers.ts` file.
-- DOM cannot be edited by something else than `src/views/` files.
-- `src/views/` cannot be called by anything else than controllers
-- `src/controllers/` cannot be called by anything else than handlers
+⚠️ Vous pouvez cacher les colonnes de votre table d'indexation (comme les URI par exemple) en cliquant dessus, onglet "Table" -> "Colonnes visibles". Cela n'affectera pas le bon fonctionnement du plugin.
 
 
-# Plugin edition
+---
 
-`git clone https://github.com/sherlock-iremus/sherlock-data`
+"Peut-on avoir plusieurs types d'indexation dans une même table ?"
 
-`cd sherlock-data/docs/grist_plugins/v2`
-
-`npm run dev`
-
-Do your modification then push to github.
-
-The plugin should be accessible and integrable at the URL : `https://sherlock-iremus.github.io/sherlock-grist-opentheso-plugin/`
+Absolument, il faudra juste créer une ligne par type d'indexation dans la table `indexes`.
