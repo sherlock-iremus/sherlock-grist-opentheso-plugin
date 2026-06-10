@@ -2,7 +2,7 @@
 
 # Usage (FR)
 
-![](https://raw.githubusercontent.com/sherlock-iremus/sherlock-grist-opentheso-plugin/main/doc/tuto.gif)
+![](https://github.com/sherlock-iremus/sherlock-grist-opentheso-plugin/blob/main/doc/tuto.gif?raw=true)
 
 
 # Installation (FR)
